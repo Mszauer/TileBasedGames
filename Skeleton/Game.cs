@@ -74,7 +74,11 @@ namespace Skeleton {
             
         }
         public void Shutdown() {
-
+            for (int h = 0; h < map.Length; h++) {
+                for (int w = 0; w < map[h].Length; w++) {
+                    map[h][w].Destroy();
+                }
+            }
         }
     }
 }
