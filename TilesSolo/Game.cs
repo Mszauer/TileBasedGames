@@ -13,8 +13,8 @@ namespace TilesSolo {
         0 = floor (32,32,30,30)
         1 = wall corner upper left (1,1,30,30)
         2 = wall corner lower left (1,63,30,30)
-        3 = wall corner lower right (32,125,30,30)
-        4 = wall corner, upper right (32,94,30,30)
+        3 = wall corner lower right (63,1,30,30)
+        4 = wall corner, upper right (63,63,30,30)
         5 = lower wall (32,63,30,30)
         6 = upper wall (32,1,30,30)
         7 = left wall (1,32,30,30)
@@ -43,8 +43,8 @@ namespace TilesSolo {
             new Rectangle(32,32,30,30),
             new Rectangle(1,1,30,30),
             new Rectangle(1,63,30,30),
-            new Rectangle(32,125,30,30),
-            new Rectangle(32,94,30,30),
+            new Rectangle(63,63,30,30),
+            new Rectangle(63,1,30,30),
             new Rectangle(32,63,30,30),
             new Rectangle(32,1,30,30),
             new Rectangle(1,32,30,30),
