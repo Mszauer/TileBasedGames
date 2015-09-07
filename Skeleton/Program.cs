@@ -60,7 +60,7 @@ namespace Skeleton {
 
             // Set window title and size
             Window.Title = "Game Name";
-            Window.ClientSize = new Size(800, 600);
+            Window.ClientSize = new Size(30*8, 30*6);
             Window.VSync = VSyncMode.On;
             // Run the game at 60 frames per second. This method will NOT return
             // until the window is closed.
