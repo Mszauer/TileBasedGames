@@ -29,18 +29,16 @@ namespace TilesSolo {
         16 = bookshelf top (63,156,30,30)
         17 = bookshelf bottom (63,187,30,30)
         */
+        public OpenTK.GameWindow window = null;
         protected int[][] mapLayout = new int[][] {
-            new int[] {1,6,6,6,9,6,6,4 },
+            new int[] {1, 6, 6, 6,9, 6, 6,4 },
             new int[] {7,16,16,16,0,10,11,8 },
             new int[] {7,17,17,17,0,0,12,8 },
             new int[] {7,0,0,0,0,0,0,8 },
             new int[] {7,0,0,0,0,0,13,8 },
             new int[] {2,5,5,14,15,5,5,3}
         };
-        protected string[] spriteSheets = new string[] {
-            "Assets/HouseTiles.png",
-            "Assets/HouseTiles.png"
-        };
+        protected string spriteSheets = "Assets/HouseTiles.png";
         protected Rectangle[] spriteSources = new Rectangle[] {
             new Rectangle(32,32,30,30),
             new Rectangle(1,1,30,30),
@@ -61,13 +59,12 @@ namespace TilesSolo {
             new Rectangle(63,156,30,30),
             new Rectangle(63,187,30,30)
         };
-        Tile[][] GenerateMap(int[][] layout, string[] sheets, Rectangle[] sources) {
+        Tile[][] GenerateMap(int[][] layout, string sheet, Rectangle[] sources) {
             Tile[][] result = new Tile[layout.Length][];
             float scale = 1.0f;
             for (int h = 0; h < layout.Length; h++) {
                 result[h] = new Tile[layout[h].Length];
                 for (int w = 0; w < layout[h].Length; w++) {
-                    string sheet = sheets[layout[h][w]];
                     Rectangle source = sources[layout[h][w]];
                     Point worldPosition = new Point();
                     worldPosition.X = (int)(w * source.Width);
@@ -90,9 +87,11 @@ namespace TilesSolo {
                 return instance;
             }
         }
-        public void Initialize() {
+        public void Initialize(OpenTK.GameWindow window) {
+            this.window = window;
             TextureManager.Instance.UseNearestFiltering = true;
-            map = GenerateMap(mapLayout, spriteSheets, spriteSources);
+            map = GenerateMap(mapLayout, spriteSheets, spriteSources); 
+            window.ClientSize = new Size(mapLayout[0].Length*30, mapLayout.Length*30);
         }
         public void Update(float dTime) {
 

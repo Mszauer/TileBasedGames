@@ -15,7 +15,7 @@ namespace TilesSolo {
             TextureManager.Instance.Initialize(Window);
             InputManager.Instance.Initialize(Window);
             SoundManager.Instance.Initialize(Window);
-            Game.Instance.Initialize();
+            Game.Instance.Initialize(Window);
         }
         public static void Update(object sender, FrameEventArgs e) {
             float dTime = (float)e.Time;
@@ -43,7 +43,6 @@ namespace TilesSolo {
         static void Main(string[] args) {
             Window = new OpenTK.GameWindow();
             Window.Title = "Zelda Game";
-            Window.ClientSize = 
             Window.Load += new EventHandler<EventArgs>(Initialize);
             Window.UpdateFrame += new EventHandler<FrameEventArgs>(Update);
             Window.RenderFrame += new EventHandler<FrameEventArgs>(Render);
