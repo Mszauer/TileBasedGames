@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skeleton", "Skeleton\Skelet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TilesSolo", "TilesSolo\TilesSolo.csproj", "{A7472E38-75F3-469B-8DD6-3DA7D0D97DBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TilesEC", "TilesEC\TilesEC.csproj", "{D3B1B6AD-CB46-43E9-BF7E-C5F1D4658F95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A7472E38-75F3-469B-8DD6-3DA7D0D97DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7472E38-75F3-469B-8DD6-3DA7D0D97DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7472E38-75F3-469B-8DD6-3DA7D0D97DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3B1B6AD-CB46-43E9-BF7E-C5F1D4658F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3B1B6AD-CB46-43E9-BF7E-C5F1D4658F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3B1B6AD-CB46-43E9-BF7E-C5F1D4658F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3B1B6AD-CB46-43E9-BF7E-C5F1D4658F95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
