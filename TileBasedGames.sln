@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TilesEC", "TilesEC\TilesEC.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hero", "Hero\Hero.csproj", "{50473AFB-B5DC-4449-AC0B-BB12B1D14FE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroPractice", "HeroPractice\HeroPractice.csproj", "{87584826-A6E2-4154-A799-40FEE8E2C58A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{50473AFB-B5DC-4449-AC0B-BB12B1D14FE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50473AFB-B5DC-4449-AC0B-BB12B1D14FE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50473AFB-B5DC-4449-AC0B-BB12B1D14FE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87584826-A6E2-4154-A799-40FEE8E2C58A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87584826-A6E2-4154-A799-40FEE8E2C58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87584826-A6E2-4154-A799-40FEE8E2C58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87584826-A6E2-4154-A799-40FEE8E2C58A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
