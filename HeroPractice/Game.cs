@@ -68,7 +68,7 @@ namespace HeroPractice {
             hero.AddSprite("Down",new Rectangle(59,1,24,30));
             hero.AddSprite("Up", new Rectangle(115,3,22,28));
             hero.AddSprite("Left",new Rectangle(1,1,26,30));
-            hero.AddSprite("Right", new Rectangle(105, 1, 26, 30));
+            hero.AddSprite("Right", new Rectangle(195, 1, 26, 30));
             hero.SetSprite("Down");
         }
         public void Update(float dt) {

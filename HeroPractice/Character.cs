@@ -36,8 +36,8 @@ namespace HeroPractice {
             spriteSource.Add(name, source);
         }
         public void SetSprite(string name) {
+            name = name.ToLower();
             if (spriteSource.ContainsKey(name)) {
-                name = name.ToLower();
                 currentSprite = name;
             }
             else {
