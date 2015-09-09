@@ -4,44 +4,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using OpenTK;
 using GameFramework;
 
-namespace HeroPractice {
+namespace KeysToMove {
     class Character {
         public Point Position { get; set; }
         public int Sprite { get; set; }
-
-        public Dictionary<string, Rectangle> spriteSource { get; private set; }
+        public Dictionary<string, Rectangle> SpriteSource { get; private set; }
         public string currentSprite { get; private set; }
 
         public Character(string spritePath,Point startPos) {
             Sprite = TextureManager.Instance.LoadTexture(spritePath);
             Position = startPos;
-            
         }
         public void Destroy() {
             TextureManager.Instance.UnloadTexture(Sprite);
         }
         public void Render() {
-            TextureManager.Instance.Draw(Sprite, Position, 1.0f,spriteSource[currentSprite]);
+            TextureManager.Instance.Draw(Sprite, Position, 1.0f, SpriteSource[currentSprite]);
         }
-        public void AddSprite(string name,Rectangle source) {
+        public void AddSprite(string name, Rectangle source) {
             name = name.ToLower();
-            if (spriteSource == null) {
-                spriteSource = new Dictionary<string, Rectangle>();
+            if (SpriteSource == null) {
+                SpriteSource = new Dictionary<string, Rectangle>();
             }
             if (currentSprite == null || currentSprite == "") {
                 currentSprite = name;
             }
-            spriteSource.Add(name, source);
+            SpriteSource.Add(name, source);
         }
         public void SetSprite(string name) {
             name = name.ToLower();
-            if (spriteSource.ContainsKey(name)) {
+            if (SpriteSource.ContainsKey(name)) {
                 currentSprite = name;
             }
             else {
-                Console.WriteLine("texture not found!");
+                Console.WriteLine("Texture not found! " + name);
             }
         }
     }

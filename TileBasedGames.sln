@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hero", "Hero\Hero.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroPractice", "HeroPractice\HeroPractice.csproj", "{87584826-A6E2-4154-A799-40FEE8E2C58A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeysToMove", "KeysToMove\KeysToMove.csproj", "{D08E85AE-FF6A-45AE-9EE1-AEEDDECA0A08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{87584826-A6E2-4154-A799-40FEE8E2C58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87584826-A6E2-4154-A799-40FEE8E2C58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87584826-A6E2-4154-A799-40FEE8E2C58A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D08E85AE-FF6A-45AE-9EE1-AEEDDECA0A08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D08E85AE-FF6A-45AE-9EE1-AEEDDECA0A08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D08E85AE-FF6A-45AE-9EE1-AEEDDECA0A08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D08E85AE-FF6A-45AE-9EE1-AEEDDECA0A08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
