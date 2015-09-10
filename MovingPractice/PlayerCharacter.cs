@@ -21,21 +21,26 @@ namespace MovingPractice {
             SetSprite("Down");
         }
         public void Update(float deltaTime) {
-            InputManager i = InputManager.Instance;
             PointF positionCpy = Position;
+            InputManager i = InputManager.Instance; //local ref to input manager
+
             if (i.KeyDown(OpenTK.Input.Key.A) || i.KeyDown(OpenTK.Input.Key.Left)) {
+               SetSprite("Left");
                 animating = true;
                 positionCpy.X -= speed * deltaTime;
             }
             else if (i.KeyDown(OpenTK.Input.Key.D) || i.KeyDown(OpenTK.Input.Key.Right)) {
+                SetSprite("Right");
                 animating = true;
                 positionCpy.X += speed * deltaTime;
             }
             else if (i.KeyDown(OpenTK.Input.Key.W) || i.KeyDown(OpenTK.Input.Key.Up)) {
+                SetSprite("Up");
                 animating = true;
                 positionCpy.Y -= speed * deltaTime;
             }
             else if (i.KeyDown(OpenTK.Input.Key.S) || i.KeyDown(OpenTK.Input.Key.Down)) {
+                SetSprite("Down");
                 animating = true;
                 positionCpy.Y += speed * deltaTime;
             }

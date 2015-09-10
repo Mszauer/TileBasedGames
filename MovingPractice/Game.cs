@@ -68,20 +68,7 @@ namespace MovingPractice {
 
         }
         public void Update(float dt) {
-            InputManager i = InputManager.Instance; //local ref to input manager
-            //using i just saves time
-            if (i.KeyDown(OpenTK.Input.Key.Left) || i.KeyDown(OpenTK.Input.Key.A)) {
-                hero.SetSprite("Left");
-            }
-            if (i.KeyDown(OpenTK.Input.Key.Right) || i.KeyDown(OpenTK.Input.Key.D)) {
-                hero.SetSprite("Right");
-            }
-            if (i.KeyDown(OpenTK.Input.Key.Up) || i.KeyDown(OpenTK.Input.Key.W)) {
-                hero.SetSprite("Up");
-            }
-            if (i.KeyDown(OpenTK.Input.Key.Down) || i.KeyDown(OpenTK.Input.Key.S)) {
-                hero.SetSprite("Down");
-            }
+            
             hero.Update(dt);
         }
         public void Render() {
