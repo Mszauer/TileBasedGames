@@ -6,7 +6,7 @@ using System.Drawing;
 namespace KeysToMove {
     class Game {
         protected Point spawnTile = new Point(2, 1);
-        protected Character hero = null;
+        protected PlayerCharacter hero = null;
         protected string heroSheet = "Assets/Link.png";
         public OpenTK.GameWindow Window = null;
         protected Tile[][] map = null;
@@ -63,13 +63,9 @@ namespace KeysToMove {
             window.ClientSize = new Size(mapLayout[0].Length * 30, mapLayout.Length * 30);
             TextureManager.Instance.UseNearestFiltering = true;
             map = GenerateMap(mapLayout, spriteSheets, spriteSources);
-            hero = new Character(heroSheet, new Point(spawnTile.X * 30, spawnTile.Y * 30));
+            hero = new PlayerCharacter(heroSheet, new Point(spawnTile.X * 30, spawnTile.Y * 30));
 
-            hero.AddSprite("Down", new Rectangle(59, 1, 24, 30));
-            hero.AddSprite("Up", new Rectangle(115, 3, 22, 28));
-            hero.AddSprite("Left", new Rectangle(1, 1, 26, 30));
-            hero.AddSprite("Right", new Rectangle(195, 1, 26, 30));
-            hero.SetSprite("Down");
+            
         }
         public void Update(float dt) {
             InputManager i = InputManager.Instance; //local ref to input manager
@@ -86,6 +82,7 @@ namespace KeysToMove {
             if (i.KeyDown(OpenTK.Input.Key.Down) || i.KeyDown(OpenTK.Input.Key.S)) {
                 hero.SetSprite("Down");
             }
+            hero.Update(dt);
         }
         public void Render() {
             for (int h = 0; h < map.Length; h++) {

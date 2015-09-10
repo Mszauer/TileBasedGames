@@ -9,7 +9,7 @@ using GameFramework;
 
 namespace KeysToMove {
     class Character {
-        public Point Position { get; set; }
+        public PointF Position { get; set; }
         public int Sprite { get; set; }
         public Dictionary<string, Rectangle> SpriteSource { get; private set; }
         public string currentSprite { get; private set; }
@@ -22,7 +22,7 @@ namespace KeysToMove {
             TextureManager.Instance.UnloadTexture(Sprite);
         }
         public void Render() {
-            TextureManager.Instance.Draw(Sprite, Position, 1.0f, SpriteSource[currentSprite]);
+            TextureManager.Instance.Draw(Sprite, new Point((int)Position.X,(int)Position.Y), 1.0f, SpriteSource[currentSprite]);
         }
         public void AddSprite(string name, Rectangle source) {
             name = name.ToLower();
