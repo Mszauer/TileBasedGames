@@ -11,8 +11,9 @@ namespace MovingPractice {
     class Character {
         public PointF Position { get; set; }
         public int Sprite { get; set; }
-        public Dictionary<string,Rectangle> SpriteSource { get; private set; }
+        public Dictionary<string,Rectangle[]> SpriteSource { get; private set; }
         public string currentSprite { get; private set; }
+        public int currentFrame = 0;
 
         public Character(string spritePath, Point pos) {
             Sprite = TextureManager.Instance.LoadTexture(spritePath);
@@ -22,12 +23,12 @@ namespace MovingPractice {
             TextureManager.Instance.UnloadTexture(Sprite);
         }
         public void Render() {
-            TextureManager.Instance.Draw(Sprite, new Point((int)Position.X,(int)Position.Y), 1.0f, SpriteSource[currentSprite]);
+            TextureManager.Instance.Draw(Sprite, new Point((int)Position.X,(int)Position.Y), 1.0f, SpriteSource[currentSprite][currentFrame]);
         }
-        public void AddSprite(string name,Rectangle source) {
+        public void AddSprite(string name,params Rectangle[] source) {
             name = name.ToLower();
             if (SpriteSource == null) {
-                SpriteSource = new Dictionary<string, Rectangle>();
+                SpriteSource = new Dictionary<string, Rectangle[]>();
             }
             if (currentSprite == null) {
                 currentSprite = name;

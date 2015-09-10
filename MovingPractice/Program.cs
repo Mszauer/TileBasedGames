@@ -20,7 +20,7 @@ namespace MovingPractice {
         public static void Update(object sender, FrameEventArgs e) {
             float dTime = (float)e.Time;
             InputManager.Instance.Update();
-            Game.Update(dTime);
+            Game.Instance.Update(dTime);
         }
         public static void Render(object sender, FrameEventArgs e) {
             GraphicsManager.Instance.ClearScreen(Color.CadetBlue);

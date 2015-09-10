@@ -10,6 +10,9 @@ using System.Drawing;
 namespace MovingPractice {
     class PlayerCharacter : Character{
         float speed = 90.0f;
+        bool animating = false;
+        float animFPS = 1.0f / 9.0f;
+        float animTimer = 0.0f;
         public PlayerCharacter(string spritePath,Point pos) : base(spritePath,pos) {
             AddSprite("Down", new Rectangle(59, 1, 24, 30));
             AddSprite("Up", new Rectangle(115, 3, 22, 28));
@@ -21,16 +24,60 @@ namespace MovingPractice {
             InputManager i = InputManager.Instance;
             PointF positionCpy = Position;
             if (i.KeyDown(OpenTK.Input.Key.A) || i.KeyDown(OpenTK.Input.Key.Left)) {
-                positionCpy.X -= speed * deltaTime;
+                animating = true;
+                if (animating) {
+                    positionCpy.X -= speed * deltaTime;
+                    if (animTimer > animFPS) {
+                        currentFrame += 1;
+                        animTimer -= animFPS;
+                        if (currentFrame > SpriteSource.Count) {
+                            currentFrame = 0;
+                        }
+                    }
+                }
+                animating = false;
             }
             else if (i.KeyDown(OpenTK.Input.Key.D) || i.KeyDown(OpenTK.Input.Key.Right)) {
-                positionCpy.X += speed * deltaTime;
+                animating = true;
+                if (animating) {
+                    positionCpy.X += speed * deltaTime;
+                    if (animTimer > animFPS) {
+                        currentFrame += 1;
+                        animTimer -= animFPS;
+                        if (currentFrame > SpriteSource.Count) {
+                            currentFrame = 0;
+                        }
+                    }
+                }
+                animating = false;
             }
             else if (i.KeyDown(OpenTK.Input.Key.W) || i.KeyDown(OpenTK.Input.Key.Up)) {
-                positionCpy.Y -= speed * deltaTime;
+                animating = true;
+                if (animating) {
+                    positionCpy.Y -= speed * deltaTime;
+                    if (animTimer > animFPS) {
+                        currentFrame += 1;
+                        animTimer -= animFPS;
+                        if (currentFrame > SpriteSource.Count) {
+                            currentFrame = 0;
+                        }
+                    }
+                }
+                animating = false;
             }
             else if (i.KeyDown(OpenTK.Input.Key.S) || i.KeyDown(OpenTK.Input.Key.Down)) {
-                positionCpy.Y += speed * deltaTime;
+                animating = true;
+                if (animating) {
+                    positionCpy.Y += speed * deltaTime;
+                    if (animTimer > animFPS) {
+                        currentFrame += 1;
+                        animTimer -= animFPS;
+                        if (currentFrame > SpriteSource.Count) {
+                            currentFrame = 0;
+                        }
+                    }
+                }
+                animating = false;
             }
             Position = positionCpy;
         }
