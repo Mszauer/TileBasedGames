@@ -29,9 +29,9 @@ namespace MovingPractice {
                     animTimer += deltaTime;
                     positionCpy.X -= speed * deltaTime;
                     if (animTimer > animFPS) {
-                        currentFrame += 1;
                         animTimer -= animFPS;
-                        if (currentFrame > SpriteSource[currentSprite].Length) {
+                        currentFrame += 1;
+                        if (currentFrame > SpriteSource[currentSprite].Length-1) {
                             currentFrame = 0;
                         }
                     }
@@ -46,7 +46,7 @@ namespace MovingPractice {
                     if (animTimer > animFPS) {
                         currentFrame += 1;
                         animTimer -= animFPS;
-                        if (currentFrame > SpriteSource[currentSprite].Length) {
+                        if (currentFrame > SpriteSource[currentSprite].Length-1) {
                             currentFrame = 0;
                         }
                     }
@@ -61,7 +61,7 @@ namespace MovingPractice {
                     if (animTimer > animFPS) {
                         currentFrame += 1;
                         animTimer -= animFPS;
-                        if (currentFrame > SpriteSource[currentSprite].Length) {
+                        if (currentFrame > SpriteSource[currentSprite].Length-1) {
                             currentFrame = 0;
                         }
                     }
@@ -76,7 +76,7 @@ namespace MovingPractice {
                     if (animTimer > animFPS) {
                         currentFrame += 1;
                         animTimer -= animFPS;
-                        if (currentFrame > SpriteSource[currentSprite].Length) {
+                        if (currentFrame > SpriteSource[currentSprite].Length-1) {
                             currentFrame = 0;
                         }
                     }
