@@ -21,31 +21,29 @@ namespace Collision {
             SetSprite("Down");
         }
         public void Update(float deltaTime) {
-            PointF positionCpy = Position;
             InputManager i = InputManager.Instance;
 
             if (i.KeyDown(OpenTK.Input.Key.A) || i.KeyDown(OpenTK.Input.Key.Left)) {
                 SetSprite("Left");
                 animating = true;
-                positionCpy.X -= speed * deltaTime;
+                Position.X -= speed * deltaTime;
             }
             else if (i.KeyDown(OpenTK.Input.Key.D) || i.KeyDown(OpenTK.Input.Key.Right)) {
                 SetSprite("Right");
                 animating = true;
-                positionCpy.X += speed * deltaTime;
+                Position.X += speed * deltaTime;
             }
             else if (i.KeyDown(OpenTK.Input.Key.W) || i.KeyDown(OpenTK.Input.Key.Up)) {
                 SetSprite("Up");
                 animating = true;
-                positionCpy.Y -= speed * deltaTime;
+                Position.Y -= speed * deltaTime;
             }
             else if (i.KeyDown(OpenTK.Input.Key.S) || i.KeyDown(OpenTK.Input.Key.Down)) {
                 SetSprite("Down");
                 animating = true;
-                positionCpy.Y += speed * deltaTime;
+                Position.Y += speed * deltaTime;
             }
 
-            Position = positionCpy;
             if (animating) {
                 animTimer += deltaTime;
                 if (animTimer > animFPS) {

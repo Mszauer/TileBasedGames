@@ -40,9 +40,19 @@ namespace Collision {
                     result[i][j] = new Tile(sheets, source);
                     result[i][j].Walkable = layout[i][j] == 0;
                     result[i][j].WorldPosition = worldPosition;
+                    Console.WriteLine("Tile " + i + " , " + j + " walkable? " + result[i][j].Walkable);
                     result[i][j].Scale = scale;
                 }
             }
+            return result;
+        }
+        public Tile GetTile(PointF pixelPoint) {
+            return map[(int)pixelPoint.Y / 30][(int)pixelPoint.X / 30];
+        }
+        public Rectangle GetTileRect(PointF pixelPoint) {
+            int xTile = (int)pixelPoint.X / 30;//integer math
+            int yTile = (int)pixelPoint.Y / 30;
+            Rectangle result = new Rectangle(xTile * 30, yTile * 30, 30, 30);
             return result;
         }
         //Singleton
@@ -76,6 +86,14 @@ namespace Collision {
             for (int h = 0; h < map.Length; h++) {
                 for (int w = 0; w < map[h].Length; w++) {
                     map[h][w].Render();
+                }
+            }
+            foreach(PointF corner in hero.Corners) {
+                if (!GetTile(corner).Walkable) {
+                    GraphicsManager.Instance.DrawRect(GetTileRect(corner), Color.Blue);
+                }
+                else {
+                    GraphicsManager.Instance.DrawRect(GetTileRect(corner), Color.Blue);
                 }
             }
             hero.Render();

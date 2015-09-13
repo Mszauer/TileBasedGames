@@ -24,6 +24,22 @@ namespace Collision {
                 return new Rectangle(new Point((int)Position.X,(int)Position.Y), new Size(SpriteSource[currentSprite][currentFrame].Width, SpriteSource[currentSprite][currentFrame].Height));
             }
         }
+        public PointF[] Corners {
+            get {
+                float w = SpriteSource[currentSprite][currentFrame].Width;
+                float h = SpriteSource[currentSprite][currentFrame].Height;
+                return new PointF[] {
+                    new PointF(Position.X,Position.Y),
+                    new PointF(Position.X+w,Position.Y),
+                    new PointF(Position.X,Position.Y+h),
+                    new PointF(Position.X+w,Position.Y+h)
+                };
+            }
+        }
+        public static readonly int CORNER_TOP_LEFT = 0;
+        public static readonly int CORNER_TOP_RIGHT = 1;
+        public static readonly int CORNER_BOTTOM_LEFT = 2;
+        public static readonly int CORNER_BOTTOM_RIGHT = 3;
         public Character(string spritePath,Point pos) {
             Sprite = TextureManager.Instance.LoadTexture(spritePath);
             Position = pos;
@@ -36,6 +52,10 @@ namespace Collision {
             TextureManager.Instance.Draw(Sprite,new Point((int)Position.X,(int)Position.Y), 1.0f, SpriteSource[currentSprite][currentFrame]);
             Rectangle center = new Rectangle((int)Center.X - 5, (int)Center.Y - 5, 10, 10);
             GraphicsManager.Instance.DrawRect(center, Color.Yellow);
+            foreach(PointF corner in Corners) {
+                Rectangle rect = new Rectangle((int)corner.X - 5, (int)corner.Y - 5, 10, 10);
+                GraphicsManager.Instance.DrawRect(rect, Color.Green);
+            }
         }
         public void AddSprite(string name, params Rectangle[] source) {
             name = name.ToLower();
