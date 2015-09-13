@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using GameFramework;
 using System.Drawing;
-
+using OpenTK;
 
 namespace Collision {
     class Game {
         protected Point spawnTile = new Point(2, 1);
         protected PlayerCharacter hero = null;
-        protected string spriteSheet = "Assets/HouseTiles.png";
         protected string heroSheet = "Assets/Link.png";
-        public OpenTK.GameWindow window = null;
+        public OpenTK.GameWindow Window = null;
         protected Tile[][] map = null;
-        protected Rectangle[] spriteSources = new Rectangle[] {
-            new Rectangle(466,32,30,30),
-            new Rectangle(466,1,30,30)
-        };
         protected int[][] mapLayout = new int[][] {
             new int[] { 1, 1, 1, 1, 1, 1, 1, 1 },
             new int[] { 1, 0, 0, 0, 0, 0, 0, 1 },
@@ -24,24 +19,33 @@ namespace Collision {
             new int[] { 1, 0, 0, 0, 0, 0, 0, 1 },
             new int[] { 1, 1, 1, 1, 1, 1, 1, 1 }
         };
-        Tile[][] GenerateMap(int[][] layout,string sheet, Rectangle[] sources) {
+
+        protected string spriteSheets = "Assets/HouseTiles.png";
+        protected Rectangle[] spriteSources = new Rectangle[] {
+            new Rectangle(466,32,30,30),
+            new Rectangle(466,1,30,30)
+        };
+        Tile[][] GenerateMap(int[][] layout, string sheets, Rectangle[] sources) {
             Tile[][] result = new Tile[layout.Length][];
             float scale = 1.0f;
             for (int i = 0; i < layout.Length; i++) {
                 result[i] = new Tile[layout[i].Length];
+
                 for (int j = 0; j < layout[i].Length; j++) {
                     Rectangle source = sources[layout[i][j]];
-                    Point WorldPosition = new Point(0, 0);
-                    WorldPosition.X = (int)(i * WorldPosition.X);
-                    WorldPosition.Y = (int)(j * WorldPosition.Y);
-                    result[i][j] = new Tile(sheet, source);
+
+                    Point worldPosition = new Point();
+                    worldPosition.X = (int)(j * source.Width);
+                    worldPosition.Y = (int)(i * source.Height);
+                    result[i][j] = new Tile(sheets, source);
                     result[i][j].Walkable = layout[i][j] == 0;
-                    result[i][j].WorldPosition = WorldPosition;
+                    result[i][j].WorldPosition = worldPosition;
                     result[i][j].Scale = scale;
                 }
             }
             return result;
         }
+        //Singleton
         private static Game instance = null;
         public static Game Instance {
             get {
@@ -51,34 +55,39 @@ namespace Collision {
                 return instance;
             }
         }
+
         protected Game() {
 
         }
-        public void Initialize(OpenTK.GameWindow windw) {
-            window = windw;
+        public void Initialize(OpenTK.GameWindow window) {
+            Window = window;
             window.ClientSize = new Size(mapLayout[0].Length * 30, mapLayout.Length * 30);
             TextureManager.Instance.UseNearestFiltering = true;
-            map = GenerateMap(mapLayout, spriteSheet, spriteSources);
+            map = GenerateMap(mapLayout, spriteSheets, spriteSources);
             hero = new PlayerCharacter(heroSheet, new Point(spawnTile.X * 30, spawnTile.Y * 30));
+
+
         }
-        public void Update(float deltaTime) {
-            hero.Update(deltaTime);
+        public void Update(float dt) {
+
+            hero.Update(dt);
+        }
+        public void Render() {
+            for (int h = 0; h < map.Length; h++) {
+                for (int w = 0; w < map[h].Length; w++) {
+                    map[h][w].Render();
+                }
+            }
+            hero.Render();
+
         }
         public void Shutdown() {
-            for (int i = 0; i < map.Length; i++) {
-                for(int j = 0; j < map[i].Length; j++) {
-                    map[i][j].Destroy();
+            for (int h = 0; h < map.Length; h++) {
+                for (int w = 0; w < map[h].Length; w++) {
+                    map[h][w].Destroy();
                 }
             }
             hero.Destroy();
-        }
-        public void Render() {
-            hero.Render();
-            for (int i = 0; i < map.Length; i++) {
-                for (int j = 0; j < map[i].Length; j++) {
-                    map[i][j].Render();
-                }
-            }
         }
     }
 }
