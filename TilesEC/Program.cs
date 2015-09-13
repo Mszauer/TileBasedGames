@@ -15,7 +15,7 @@ namespace TilesEC {
             TextureManager.Instance.Initialize(Window);
             InputManager.Instance.Initialize(Window);
             SoundManager.Instance.Initialize(Window);
-            Game.Instance.Initialize();
+            Game.Instance.Initialize(Window);
         }
         public static void Update(object sender, FrameEventArgs e) {
             float dTime = (float)e.Time;
@@ -31,7 +31,7 @@ namespace TilesEC {
             GraphicsManager.Instance.SwapBuffers();
         }
         public static void Shutdown(object sender, EventArgs e) {
-            Game.Instance.Shutdown();
+            Game.Instance.Destroy();
             SoundManager.Instance.Shutdown();
             InputManager.Instance.Shutdown();
             TextureManager.Instance.Shutdown();

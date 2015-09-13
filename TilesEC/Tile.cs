@@ -14,14 +14,14 @@ namespace TilesEC {
 
         public Point WorldPosition { get; set; }
         public float Scale { get; set; }
-        
-        public Tile (string spritePath, Rectangle sourceRectangle) {
+
+        public Tile(string spritePath, Rectangle sourceRectangle) {
             Sprite = TextureManager.Instance.LoadTexture(spritePath);
             Source = sourceRectangle;
             WorldPosition = new Point(0, 0);
             Scale = 1.0f;
             Walkable = false;
-        } 
+        }
         public void Render() {
             Point renderPosition = new Point(WorldPosition.X, WorldPosition.Y);
             renderPosition.X = (int)(Scale * WorldPosition.X);
@@ -31,4 +31,5 @@ namespace TilesEC {
         public void Destroy() {
             TextureManager.Instance.UnloadTexture(Sprite);
         }
+    }
 }
