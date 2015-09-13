@@ -40,7 +40,6 @@ namespace Collision {
                     result[i][j] = new Tile(sheets, source);
                     result[i][j].Walkable = layout[i][j] == 0;
                     result[i][j].WorldPosition = worldPosition;
-                    Console.WriteLine("Tile " + i + " , " + j + " walkable? " + result[i][j].Walkable);
                     result[i][j].Scale = scale;
                 }
             }
@@ -90,7 +89,7 @@ namespace Collision {
             }
             foreach(PointF corner in hero.Corners) {
                 if (!GetTile(corner).Walkable) {
-                    GraphicsManager.Instance.DrawRect(GetTileRect(corner), Color.Blue);
+                    GraphicsManager.Instance.DrawRect(GetTileRect(corner), Color.Violet);
                 }
                 else {
                     GraphicsManager.Instance.DrawRect(GetTileRect(corner), Color.Blue);

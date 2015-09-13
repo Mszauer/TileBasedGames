@@ -10,7 +10,6 @@ using System.Drawing;
 namespace Collision {
     class PlayerCharacter : Character{
         float speed = 90.0f;
-        bool animating = false;
         float animFPS = 1.0f / 9.0f;
         float animTimer = 0.0f;
         public PlayerCharacter(string spritePath, Point pos) : base(spritePath,pos) {
@@ -25,36 +24,59 @@ namespace Collision {
 
             if (i.KeyDown(OpenTK.Input.Key.A) || i.KeyDown(OpenTK.Input.Key.Left)) {
                 SetSprite("Left");
-                animating = true;
+                Animate(deltaTime);
                 Position.X -= speed * deltaTime;
+                if (!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).Walkable) {
+                    Rectangle intersection = Intersection.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_TOP_LEFT]));
+                    if (intersection.Width*intersection.Height > 0) {
+                        Position.X = intersection.Right;
+                    }
+                }
+                if (!Game.Instance.GetTile(Corners[CORNER_BOTTOM_LEFT]).Walkable) {
+                    Rectangle intersection = Intersection.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_BOTTOM_LEFT]));
+                    if (intersection.Width*intersection.Height > 0) {
+                        Position.X = intersection.Right;
+                    }
+                }
             }
             else if (i.KeyDown(OpenTK.Input.Key.D) || i.KeyDown(OpenTK.Input.Key.Right)) {
                 SetSprite("Right");
-                animating = true;
+                Animate(deltaTime);
                 Position.X += speed * deltaTime;
+                if (!Game.Instance.GetTile(Corners[CORNER_TOP_RIGHT]).Walkable) {
+                    Rectangle intersection = Intersection.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_TOP_RIGHT]));
+                    if (intersection.Width*intersection.Height>0){
+                        Position.X = intersection.Left-30;
+                    }
+                }
+                if (!Game.Instance.GetTile(Corners[CORNER_BOTTOM_RIGHT]).Walkable) {
+                    Rectangle intersection = Intersection.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_BOTTOM_RIGHT]));
+                    if (intersection.Width*intersection.Height > 0){
+                        Position.X = intersection.Left - 30;
+                    }
+                }
             }
-            else if (i.KeyDown(OpenTK.Input.Key.W) || i.KeyDown(OpenTK.Input.Key.Up)) {
+           if (i.KeyDown(OpenTK.Input.Key.W) || i.KeyDown(OpenTK.Input.Key.Up)) {
                 SetSprite("Up");
-                animating = true;
+                Animate(deltaTime);
                 Position.Y -= speed * deltaTime;
             }
             else if (i.KeyDown(OpenTK.Input.Key.S) || i.KeyDown(OpenTK.Input.Key.Down)) {
                 SetSprite("Down");
-                animating = true;
+                Animate(deltaTime);
                 Position.Y += speed * deltaTime;
             }
 
-            if (animating) {
-                animTimer += deltaTime;
-                if (animTimer > animFPS) {
-                    currentFrame += 1;
-                    animTimer -= animFPS;
-                    if (currentFrame > SpriteSource[currentSprite].Length - 1) {
-                        currentFrame = 0;
-                    }
+        }
+        protected void Animate(float deltaTime) {
+            animTimer += deltaTime;
+            if (animTimer > animFPS) {
+                currentFrame += 1;
+                animTimer -= animFPS;
+                if (currentFrame > SpriteSource[currentSprite].Length - 1) {
+                    currentFrame = 0;
                 }
             }
-            animating = false;
         }
     }
 }
