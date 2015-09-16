@@ -12,22 +12,25 @@ namespace Jumping {
         public float speed = 90.0f;
         float animFPS = 1.0f / 9.0f;
         float animTimer = 0f;
-        float impulse = -180.0f;//randomly chosen
-        float velocity = 0.0f; // changes every frame
-        protected float gravity = 7 * 30;//fall 7tiles / second
+        protected float impulse = 0.0f;
+        protected float velocity = 0.0f;
+        protected float gravity = 0 / 0f;
         public PlayerCharacter(string spritePath, Point pos) : base(spritePath, pos) {
             AddSprite("Down", new Rectangle(59, 1, 24, 30), new Rectangle(87, 1, 24, 30));
-            AddSprite("Up", new Rectangle(115, 3, 22, 28), new Rectangle(141, 3, 22, 30));
+            AddSprite("Up", new Rectangle(115, 3, 22, 30), new Rectangle(141, 3, 22, 30));
             AddSprite("Left", new Rectangle(1, 1, 26, 30), new Rectangle(31, 1, 26, 30));
             AddSprite("Right", new Rectangle(195, 1, 26, 30), new Rectangle(167, 1, 26, 30));
-            AddSprite("Jump", new Rectangle(122, 75, 23, 30), new Rectangle(154, 76, 22, 30));
+            AddSprite("Jump", new Rectangle(122, 75, 23, 30), new Rectangle(154, 76, 23, 30));
             SetSprite("Down");
+            SetJump(3 * 30, 0.75f);
         }
         public void Update(float deltaTime) {
             InputManager i = InputManager.Instance;
 
             if (i.KeyDown(OpenTK.Input.Key.A) || i.KeyDown(OpenTK.Input.Key.Left)) {
-                SetSprite("Left");
+                if (velocity == gravity) {
+                    SetSprite("Left");
+                }
                 Animate(deltaTime);
                 Position.X -= speed * deltaTime;
                 if (!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).Walkable) {
@@ -44,7 +47,9 @@ namespace Jumping {
                 }
             }
             else if (i.KeyDown(OpenTK.Input.Key.D) || i.KeyDown(OpenTK.Input.Key.Right)) {
+                if (velocity == gravity) {
                 SetSprite("Right");
+                }
                 Animate(deltaTime);
                 Position.X += speed * deltaTime;
                 if (!Game.Instance.GetTile(Corners[CORNER_TOP_RIGHT]).Walkable) {
@@ -115,7 +120,7 @@ namespace Jumping {
                     if (velocity != gravity) {
                         SetSprite("Down");
                     }
-                    velocity = 0;
+                    velocity = gravity;
                 }
             }
             if (!Game.Instance.GetTile(Corners[CORNER_BOTTOM_RIGHT]).Walkable) {
@@ -125,7 +130,7 @@ namespace Jumping {
                     if (velocity != gravity) {
                         SetSprite("Down");
                     }
-                    velocity = 0;
+                    velocity = gravity;
                 }
             }
             if (!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).Walkable) {
@@ -154,5 +159,10 @@ namespace Jumping {
                 }
             }
         }
+        public void SetJump(float height, float duration) {
+            impulse = 2*height/duration;
+            impulse *= -1;
+            gravity = -impulse/duration;
+}
     }
 }
