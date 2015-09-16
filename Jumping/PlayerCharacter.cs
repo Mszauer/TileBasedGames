@@ -13,7 +13,7 @@ namespace Jumping {
         float animFPS = 1.0f / 9.0f;
         float animTimer = 0f;
         float impulse = -180.0f;//randomly chosen
-        float velocity = 0.0f // changes every frame
+        float velocity = 0.0f; // changes every frame
         protected float gravity = 7 * 30;//fall 7tiles / second
         public PlayerCharacter(string spritePath, Point pos) : base(spritePath, pos) {
             AddSprite("Down", new Rectangle(59, 1, 24, 30), new Rectangle(87, 1, 24, 30));
@@ -95,6 +95,9 @@ namespace Jumping {
                 }
             }
 #else
+            if (i.KeyPressed(OpenTK.Input.Key.Space)) {
+                velocity = impulse;
+            }
             velocity += gravity;
             if (velocity > gravity) {
                 velocity = gravity;
