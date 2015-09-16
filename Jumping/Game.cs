@@ -4,7 +4,7 @@ using GameFramework;
 using System.Drawing;
 using OpenTK;
 
-namespace OpenTheDoor {
+namespace Jumping {
     class Game {
         protected Point spawnTile = new Point(2, 1);
         protected PlayerCharacter hero = null;
@@ -64,11 +64,11 @@ namespace OpenTheDoor {
             TextureManager.Instance.UseNearestFiltering = true;
 
             hero = new PlayerCharacter(heroSheet, new Point(spawnTile.X * 30, spawnTile.Y * 30));
-            room1 = new Map(room1Layout, spriteSheets, spriteSources,2,0);
-            room2 = new Map(room2Layout, spriteSheets, spriteSources,0,2);
-            room1[4][7].MakeDoor(room2,new Point(1,1));
-            room2[1][0].MakeDoor(room1, new Point(6,4));
-            currentMap = room1;
+            room1 = new Map(room1Layout, spriteSheets, spriteSources, 2, 0);
+            room2 = new Map(room2Layout, spriteSheets, spriteSources, 0, 2);
+            room1[4][7].MakeDoor(room2, new Point(1, 1));
+            room2[1][0].MakeDoor(room1, new Point(6, 4));
+            currentMap = room2;
         }
         public void Update(float dt) {
             currentMap = currentMap.ResolveDoors(hero);

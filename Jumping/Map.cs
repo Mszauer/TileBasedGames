@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using GameFramework;
 
-namespace OpenTheDoor {
+namespace Jumping {
     class Map {
         protected Tile[][] tileMap = null;
 
@@ -20,7 +20,7 @@ namespace OpenTheDoor {
                 return tileMap.Length;
             }
         }
-        public Map(int[][] layout,string sheets,Rectangle[] sources, params int[] walkable) {
+        public Map(int[][] layout, string sheets, Rectangle[] sources, params int[] walkable) {
             Tile[][] result = new Tile[layout.Length][];
             float scale = 1.0f;
             for (int i = 0; i < layout.Length; i++) {
@@ -59,8 +59,8 @@ namespace OpenTheDoor {
                         //look for an intersection
                         Rectangle intersection = Intersections.Rect(doorRect, playerCenter);
                         if (intersection.Width * intersection.Height > 0) {
-                                result = tileMap[row][col].DoorTarget;
-                            hero.Position.X = tileMap[row][col].DoorLocation.X * 30;
+                            result = tileMap[row][col].DoorTarget;
+                            hero.Position.X = tileMap[row][col].DoorLocation.X*30;
                             hero.Position.Y = tileMap[row][col].DoorLocation.Y * 30;
                         }
                     }
