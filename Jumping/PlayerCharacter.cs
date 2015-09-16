@@ -20,6 +20,7 @@ namespace Jumping {
             AddSprite("Up", new Rectangle(115, 3, 22, 28), new Rectangle(141, 3, 22, 30));
             AddSprite("Left", new Rectangle(1, 1, 26, 30), new Rectangle(31, 1, 26, 30));
             AddSprite("Right", new Rectangle(195, 1, 26, 30), new Rectangle(167, 1, 26, 30));
+            AddSprite("Jump", new Rectangle(122, 75, 23, 30), new Rectangle(154, 76, 22, 30));
             SetSprite("Down");
         }
         public void Update(float deltaTime) {
@@ -95,10 +96,14 @@ namespace Jumping {
                 }
             }
 #else
-            if (i.KeyPressed(OpenTK.Input.Key.Space)) {
+            if (i.KeyPressed(OpenTK.Input.Key.Space) && velocity == gravity) {
                 velocity = impulse;
+                SetSprite("Jump");
             }
-            velocity += gravity;
+            if (velocity != gravity) {
+                Animate(deltaTime);
+            }
+            velocity += gravity*deltaTime;
             if (velocity > gravity) {
                 velocity = gravity;
             }
@@ -107,12 +112,34 @@ namespace Jumping {
                 Rectangle intersection = Intersections.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_BOTTOM_LEFT]));
                 if (intersection.Width * intersection.Height > 0) {
                     Position.Y = intersection.Top - Rect.Height;
+                    if (velocity != gravity) {
+                        SetSprite("Down");
+                    }
+                    velocity = 0;
                 }
             }
             if (!Game.Instance.GetTile(Corners[CORNER_BOTTOM_RIGHT]).Walkable) {
                 Rectangle intersection = Intersections.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_BOTTOM_RIGHT]));
                 if (intersection.Width * intersection.Height > 0) {
                     Position.Y = intersection.Top - Rect.Height;
+                    if (velocity != gravity) {
+                        SetSprite("Down");
+                    }
+                    velocity = 0;
+                }
+            }
+            if (!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).Walkable) {
+                Rectangle intersection = Intersections.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_TOP_LEFT]));
+                if (intersection.Width * intersection.Height > 0) {
+                    Position.Y = intersection.Bottom;
+                    velocity = Math.Abs(velocity);
+                }
+            }
+            if (!Game.Instance.GetTile(Corners[CORNER_TOP_RIGHT]).Walkable) {
+                Rectangle intersection = Intersections.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_TOP_RIGHT]));
+                if (intersection.Width * intersection.Height > 0) {
+                    Position.Y = intersection.Bottom;
+                    velocity = Math.Abs(velocity);
                 }
             }
 #endif
