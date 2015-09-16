@@ -68,9 +68,10 @@ namespace OpenTheDoor {
             room2 = new Map(room2Layout, spriteSheets, spriteSources,0,2);
             room1[4][7].MakeDoor(room2,new Point(1,1));
             room2[1][0].MakeDoor(room1, new Point(6,4));
-            currentMap = room2;
+            currentMap = room1;
         }
         public void Update(float dt) {
+            currentMap.ResolveDoors(hero);
             hero.Update(dt);
         }
         public void Render() {
@@ -88,7 +89,8 @@ namespace OpenTheDoor {
 
         }
         public void Shutdown() {
-            currentMap.Destroy();
+            room1.Destroy();
+            room2.Destroy();
             hero.Destroy();
         }
     }
