@@ -1,4 +1,4 @@
-﻿#define ENABLE_VERTICAL_MOVEMENT
+﻿//#define ENABLE_VERTICAL_MOVEMENT
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,10 @@ namespace Clouds {
             InputManager i = InputManager.Instance;
 
             if (i.KeyDown(OpenTK.Input.Key.A) || i.KeyDown(OpenTK.Input.Key.Left)) {
-                if (velocity == gravity) {
+#if !ENABLE_VERTICAL_MOVEMENT
+                if (velocity == gravity)
+#endif
+                    {
                     SetSprite("Left");
                 }
                 Animate(deltaTime);
@@ -133,18 +136,22 @@ namespace Clouds {
                     velocity = gravity;
                 }
             }
-            if (!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).Walkable) {
+            if (!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).Walkable&&!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).IsCloud) {
                 Rectangle intersection = Intersections.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_TOP_LEFT]));
                 if (intersection.Width * intersection.Height > 0) {
-                    Position.Y = intersection.Bottom;
-                    velocity = Math.Abs(velocity);
+                    if (!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).IsCloud || velocity > 0) {
+                        Position.Y = intersection.Bottom;
+                        velocity = Math.Abs(velocity);
+                    }
                 }
             }
-            if (!Game.Instance.GetTile(Corners[CORNER_TOP_RIGHT]).Walkable) {
+            if (!Game.Instance.GetTile(Corners[CORNER_TOP_RIGHT]).Walkable && !Game.Instance.GetTile(Corners[CORNER_TOP_RIGHT]).IsCloud) {
                 Rectangle intersection = Intersections.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_TOP_RIGHT]));
                 if (intersection.Width * intersection.Height > 0) {
-                    Position.Y = intersection.Bottom;
-                    velocity = Math.Abs(velocity);
+                    if (!Game.Instance.GetTile(Corners[CORNER_TOP_RIGHT]).IsCloud || velocity > 0) {
+                        Position.Y = intersection.Bottom;
+                        velocity = Math.Abs(velocity);
+                    }
                 }
             }
 #endif

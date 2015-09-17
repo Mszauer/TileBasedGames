@@ -11,6 +11,7 @@ namespace Clouds {
         public Map DoorTarget = null;
         public Point DoorLocation = new Point();
         public bool IsDoor { get; set; }
+        public bool IsCloud { get; set; }
         public int Sprite { get; private set; }
         public Rectangle Source { get; private set; }
         public bool Walkable { get; set; }
@@ -21,6 +22,7 @@ namespace Clouds {
             Source = source;
             Scale = 1.0f;
             Walkable = false;
+            IsCloud = false;
             WorldPosition = new Point(0, 0);
         }
         public void Render() {

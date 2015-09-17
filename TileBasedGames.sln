@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTheDoor", "OpenTheDoor\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jumping", "Jumping\Jumping.csproj", "{96173ADB-1D2B-4419-8A6D-449BD5854F26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clouds", "Clouds\Clouds.csproj", "{AE946263-7738-4C19-BF1B-283F7BA7103D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{96173ADB-1D2B-4419-8A6D-449BD5854F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96173ADB-1D2B-4419-8A6D-449BD5854F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96173ADB-1D2B-4419-8A6D-449BD5854F26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE946263-7738-4C19-BF1B-283F7BA7103D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE946263-7738-4C19-BF1B-283F7BA7103D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE946263-7738-4C19-BF1B-283F7BA7103D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE946263-7738-4C19-BF1B-283F7BA7103D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

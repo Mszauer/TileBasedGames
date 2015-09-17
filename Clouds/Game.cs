@@ -11,29 +11,39 @@ namespace Clouds {
         protected string heroSheet = "Assets/Link.png";
         public OpenTK.GameWindow Window = null;
         protected Map room1 = null;
-        protected int[][] room1Layout = new int[][] {
-            new int[] { 1, 1, 1, 1, 1, 1, 1, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 1, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 1, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 2 },
-            new int[] { 1, 1, 1, 1, 1, 1, 1, 1 }
-        };
         protected Map room2 = null;
+        protected int[][] room1Layout = new int[][] {
+            new int[] { 3, 3, 3, 3, 3, 3, 3, 3 },
+            new int[] { 3, 4, 4, 4, 4, 4, 4, 3 },
+            new int[] { 3, 4, 4, 4, 4, 4, 4, 3 },
+            new int[] { 3, 4,11,12, 4, 4, 4, 3 },
+            new int[] { 3, 4, 4, 4, 4, 4, 4, 2 },
+            new int[] { 3, 5, 5, 5, 5, 5, 5, 5 }
+        };
         protected int[][] room2Layout = new int[][] {
-            new int[] { 1, 1, 1, 1, 1, 1, 1, 1 },
-            new int[] { 2, 0, 0, 0, 1, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 1, 0, 0, 1 },
-            new int[] { 1, 1, 1, 1, 1, 1, 1, 1 }
+            new int[] { 3, 3, 3, 3, 3, 3, 3, 3 },
+            new int[] { 3, 4, 4, 4, 4, 4, 8, 3 },
+            new int[] { 3, 4, 4, 4, 4, 4, 9, 3 },
+            new int[] { 3, 4, 4, 4, 4, 4,10, 3 },
+            new int[] { 2, 4, 4, 4, 4, 4, 4, 3 },
+            new int[] { 5, 5, 5, 5, 5, 5, 5, 3 }
         };
         protected Map currentMap = null;
         protected string spriteSheets = "Assets/HouseTiles.png";
         protected Rectangle[] spriteSources = new Rectangle[] {
-            new Rectangle(466,32,30,30),
-            new Rectangle(466,1,30,30),
-            new Rectangle(32,187,30,30)
+            /* 0  */new Rectangle(466,32,30,30),
+            /* 1  */new Rectangle(466,1,30,30),
+            /* 2  */new Rectangle(32,187,30,30),
+            /* 3  */new Rectangle(466, 125,30,30), // blue border
+            /* 4  */new Rectangle(311, 249,30,30), // blackness
+            /* 5  */new Rectangle(466, 63,30,30), // ground layer
+            /* 6  */new Rectangle(63, 218,30,30), // blank ladder
+            /* 7  */new Rectangle(156, 218,30,30), // ground ladder
+            /* 8  */new Rectangle(63, 249,30,30),  // skele 1
+            /* 9  */new Rectangle(94, 249,30,30), // slele 2
+            /* 10 */new Rectangle(125, 249,30,30), // skele 3
+            /* 11 */new Rectangle(156, 249,30,30), // cloud 1
+            /* 12 */new Rectangle(187, 249,30,30), // cloud 2
         };
         public Tile GetTile(PointF pixelPoint) {
             return currentMap[(int)pixelPoint.Y / 30][(int)pixelPoint.X / 30];
@@ -64,10 +74,12 @@ namespace Clouds {
             TextureManager.Instance.UseNearestFiltering = true;
 
             hero = new PlayerCharacter(heroSheet, new Point(spawnTile.X * 30, spawnTile.Y * 30));
-            room1 = new Map(room1Layout, spriteSheets, spriteSources, 2, 0);
-            room2 = new Map(room2Layout, spriteSheets, spriteSources, 0, 2);
-            room1[4][7].MakeDoor(room2, new Point(1, 1));
-            room2[1][0].MakeDoor(room1, new Point(6, 4));
+            room1 = new Map(room1Layout, spriteSheets, spriteSources, 2, 0, 4, 8, 9, 10);
+            room2 = new Map(room2Layout, spriteSheets, spriteSources, 0, 2, 4, 8, 9, 10);
+            room1[4][7].MakeDoor(room2, new Point(1, 4));
+            room2[4][0].MakeDoor(room1, new Point(6, 4));
+            room1[3][2].IsCloud = true;
+            room1[3][3].IsCloud = true;
             currentMap = room1;
         }
         public void Update(float dt) {
