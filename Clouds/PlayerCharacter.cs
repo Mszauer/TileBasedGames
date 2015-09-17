@@ -50,7 +50,10 @@ namespace Clouds {
                 }
             }
             else if (i.KeyDown(OpenTK.Input.Key.D) || i.KeyDown(OpenTK.Input.Key.Right)) {
-                if (velocity == gravity) {
+#if !ENABLE_VERTICAL_MOVEMENT
+                if (velocity == gravity)
+#endif
+                {
                     SetSprite("Right");
                 }
                 Animate(deltaTime);
@@ -119,39 +122,39 @@ namespace Clouds {
             if (!Game.Instance.GetTile(Corners[CORNER_BOTTOM_LEFT]).Walkable) {
                 Rectangle intersection = Intersections.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_BOTTOM_LEFT]));
                 if (intersection.Width * intersection.Height > 0) {
-                    Position.Y = intersection.Top - Rect.Height;
-                    if (velocity != gravity) {
-                        SetSprite("Down");
+                    if (!Game.Instance.GetTile(Corners[CORNER_BOTTOM_LEFT]).IsCloud || velocity > 0) {
+                        Position.Y = intersection.Top - Rect.Height;
+                        if (velocity != gravity) {
+                            SetSprite("Down");
+                        }
+                        velocity = gravity;
                     }
-                    velocity = gravity;
                 }
             }
             if (!Game.Instance.GetTile(Corners[CORNER_BOTTOM_RIGHT]).Walkable) {
                 Rectangle intersection = Intersections.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_BOTTOM_RIGHT]));
                 if (intersection.Width * intersection.Height > 0) {
-                    Position.Y = intersection.Top - Rect.Height;
-                    if (velocity != gravity) {
-                        SetSprite("Down");
+                    if (!Game.Instance.GetTile(Corners[CORNER_BOTTOM_RIGHT]).IsCloud || velocity > 0) {
+                            Position.Y = intersection.Top - Rect.Height;
+                            if (velocity != gravity) {
+                                SetSprite("Down");
+                            }
+                            velocity = gravity;
+                        }
                     }
-                    velocity = gravity;
                 }
-            }
             if (!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).Walkable&&!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).IsCloud) {
                 Rectangle intersection = Intersections.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_TOP_LEFT]));
                 if (intersection.Width * intersection.Height > 0) {
-                    if (!Game.Instance.GetTile(Corners[CORNER_TOP_LEFT]).IsCloud || velocity > 0) {
                         Position.Y = intersection.Bottom;
                         velocity = Math.Abs(velocity);
-                    }
                 }
             }
             if (!Game.Instance.GetTile(Corners[CORNER_TOP_RIGHT]).Walkable && !Game.Instance.GetTile(Corners[CORNER_TOP_RIGHT]).IsCloud) {
                 Rectangle intersection = Intersections.Rect(Rect, Game.Instance.GetTileRect(Corners[CORNER_TOP_RIGHT]));
                 if (intersection.Width * intersection.Height > 0) {
-                    if (!Game.Instance.GetTile(Corners[CORNER_TOP_RIGHT]).IsCloud || velocity > 0) {
                         Position.Y = intersection.Bottom;
                         velocity = Math.Abs(velocity);
-                    }
                 }
             }
 #endif
