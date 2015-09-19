@@ -40,7 +40,7 @@ namespace SimpleEnemy {
         [STAThread]
         static void Main(string[] args) {
             Window = new OpenTK.GameWindow();
-            Window.Title = "Doors";
+            Window.Title = "SimpleEnemy";
             Window.Load += new EventHandler<EventArgs>(Initialize);
             Window.UpdateFrame += new EventHandler<FrameEventArgs>(Update);
             Window.RenderFrame += new EventHandler<FrameEventArgs>(Render);

@@ -9,7 +9,7 @@ using GameFramework;
 namespace SimpleEnemy {
     class Map {
         protected Tile[][] tileMap = null;
-
+        List<EnemyCharacter> enemies =null;
         public Tile[] this[int i] {
             get {
                 return tileMap[i];
@@ -21,6 +21,7 @@ namespace SimpleEnemy {
             }
         }
         public Map(int[][] layout, string sheets, Rectangle[] sources, params int[] walkable) {
+            enemies = new List<EnemyCharacter>();
             Tile[][] result = new Tile[layout.Length][];
             float scale = 1.0f;
             for (int i = 0; i < layout.Length; i++) {
@@ -68,11 +69,26 @@ namespace SimpleEnemy {
             }
             return result;
         }
+        public void AddEnemy(string spritePath, Point pos, bool moveUpDown) {
+            enemies.Add(new EnemyCharacter(spritePath, pos, moveUpDown));
+        }
+        public void Update(float dTime, PlayerCharacter hero) {
+            for (int i = 0; i < enemies.Count; i++) {
+                enemies[i].Update(dTime);
+                Rectangle intersection = Intersections.Rect(hero.Rect, enemies[i].Rect);
+                if (intersection.Width*intersection.Height > 0) {
+                    Game.Instance.GameOver = true;
+                }
+            }
+        }
         public void Render() {
             for (int h = 0; h < tileMap.Length; h++) {
                 for (int w = 0; w < tileMap[h].Length; w++) {
                     tileMap[h][w].Render();
                 }
+            }
+            for (int i = 0; i < enemies.Count; i++) {
+                enemies[i].Render();
             }
         }
         public void Destroy() {
@@ -81,6 +97,10 @@ namespace SimpleEnemy {
                     tileMap[h][w].Destroy();
                 }
             }
+            for (int i = 0; i < enemies.Count; i++) {
+                enemies[i].Destroy();
+            }
         }
+
     }
 }
