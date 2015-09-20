@@ -101,10 +101,10 @@ namespace Shooting {
                     }
                     projectiles.Add(new Bullet(hero.Center, velocity));
                 }
-                for (int i = 0; i < projectiles.Count; i++) {
+                for (int i = projectiles.Count; i > 0; i--) {
                     projectiles[i].Update(dt);
                 }
-                currentMap.Update(dt, hero);
+                currentMap.Update(dt, hero,projectiles);
             }
             else {
                 if (InputManager.Instance.KeyPressed(OpenTK.Input.Key.Space)) {
