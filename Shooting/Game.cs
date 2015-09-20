@@ -101,7 +101,7 @@ namespace Shooting {
                     }
                     projectiles.Add(new Bullet(hero.Center, velocity));
                 }
-                for (int i = projectiles.Count; i > 0; i--) {
+                for (int i = projectiles.Count-1; i > 0; i--) {
                     projectiles[i].Update(dt);
                 }
                 currentMap.Update(dt, hero,projectiles);

@@ -73,24 +73,32 @@ namespace Shooting {
             enemies.Add(new EnemyCharacter(spritePath, pos, moveUpDown));
         }
         public void Update(float dTime, PlayerCharacter hero, List<Bullet> projectiles) {
-            for (int i = projectiles.Count; i > 0; i--) {
+            for (int i = projectiles.Count-1; i >= 0; i--) {
                 int xTile = (int)projectiles[i].Position.X / 30;
                 int yTile = (int)projectiles[i].Position.Y / 30;
-                if (xTile > this.Length) {
+                if (xTile >= this.Length || xTile < 0) {
                     projectiles.RemoveAt(i);
                 }
-                else if (yTile > this[xTile].Length) {
+                else if (yTile >= this[xTile].Length || yTile < 0) {
                     projectiles.RemoveAt(i);
                 }
                 else if (!this[xTile][yTile].Walkable) {
                     projectiles.RemoveAt(i);
                 }
             }
-            for (int i = 0; i < enemies.Count; i++) {
+            for (int i = enemies.Count-1; i >= 0; i--) {
                 enemies[i].Update(dTime);
                 Rectangle intersection = Intersections.Rect(hero.Rect, enemies[i].Rect);
                 if (intersection.Width * intersection.Height > 0) {
                     Game.Instance.GameOver = true;
+                }
+                for (int j = projectiles.Count - 1; j >= 0; j--) {
+                    intersection = Intersections.Rect(enemies[i].Rect, projectiles[j].Rect);
+                    if (intersection.Width*intersection.Height > 0) {
+                        enemies.RemoveAt(i);
+                        projectiles.RemoveAt(j);
+                        break;
+                    }
                 }
             }
         }
