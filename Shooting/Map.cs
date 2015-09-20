@@ -76,13 +76,13 @@ namespace Shooting {
             for (int i = projectiles.Count-1; i >= 0; i--) {
                 int xTile = (int)projectiles[i].Position.X / 30;
                 int yTile = (int)projectiles[i].Position.Y / 30;
-                if (xTile >= this.Length || xTile < 0) {
+                if (xTile >= this[0].Length || xTile < 0) {
                     projectiles.RemoveAt(i);
                 }
-                else if (yTile >= this[xTile].Length || yTile < 0) {
+                else if (yTile >= this.Length || yTile < 0) {
                     projectiles.RemoveAt(i);
                 }
-                else if (!this[xTile][yTile].Walkable) {
+                else if (!this[yTile][xTile].Walkable) {
                     projectiles.RemoveAt(i);
                 }
             }
