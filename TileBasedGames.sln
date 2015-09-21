@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEnemy", "SimpleEnemy\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shooting", "Shooting\Shooting.csproj", "{F9CEB98B-5706-4730-9024-A0F6B08AE2EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Items", "Items\Items.csproj", "{C045F237-1FA1-49BF-A8F2-FE932985B311}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{F9CEB98B-5706-4730-9024-A0F6B08AE2EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9CEB98B-5706-4730-9024-A0F6B08AE2EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9CEB98B-5706-4730-9024-A0F6B08AE2EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C045F237-1FA1-49BF-A8F2-FE932985B311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C045F237-1FA1-49BF-A8F2-FE932985B311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C045F237-1FA1-49BF-A8F2-FE932985B311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C045F237-1FA1-49BF-A8F2-FE932985B311}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
