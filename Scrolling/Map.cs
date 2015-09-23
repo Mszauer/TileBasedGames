@@ -128,7 +128,7 @@ namespace Scrolling {
                     if (h < 0 || w < 0) {
                         continue;
                     }
-                    if (h >= tileMap.Length || w > tileMap[h].Length) {
+                    if (h >= tileMap.Length || w >= tileMap[h].Length) {
                         continue;
                     }
                     //what if the two maps aren't equal in size? CRASHES
