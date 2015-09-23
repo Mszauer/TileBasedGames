@@ -115,10 +115,10 @@ namespace Scrolling {
             }
         }
         public void Render(PointF offsetPosition, PointF cameraCenter) {
-            int minX = (int)cameraCenter.X - 4 * 30 - 30;
-            int minY = (int)cameraCenter.Y - 4 * 30 - 30;
-            int maxX = (int)cameraCenter.X + 4 * 30 + 30;
-            int maxY = (int)cameraCenter.Y + 4 * 30 + 30;
+            int minX = (int)cameraCenter.X - 8 * 30 - 30;
+            int minY = (int)cameraCenter.Y - 6 * 30 - 30;
+            int maxX = (int)cameraCenter.X + 8 * 30 + 30;
+            int maxY = (int)cameraCenter.Y + 6 * 30 + 30;
             minX /= 30;
             minY /= 30;
             maxX /= 30;
@@ -131,7 +131,6 @@ namespace Scrolling {
                     if (h >= tileMap.Length || w >= tileMap[h].Length) {
                         continue;
                     }
-                    //what if the two maps aren't equal in size? CRASHES
                     tileMap[h][w].Render(offsetPosition);
                 }
             }

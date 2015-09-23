@@ -127,17 +127,17 @@ namespace Scrolling {
             offsetPosition.X = hero.Position.X - (float)(4 * tileSize);
             offsetPosition.Y = hero.Position.Y - (float)(3 * tileSize);
             // If the hero is less than half the camera close to the left or top corner
-            if (hero.Center.X < 4 * tileSize) {
+            if (hero.Position.X < 4 * tileSize) {
                 offsetPosition.X = 0;
             }
-            if (hero.Center.Y < 4 * tileSize) {
+            if (hero.Position.Y < 3 * tileSize) {
                 offsetPosition.Y = 0;
             }
             // If the hero is less than half the camera close to the bottom or right corner
-            if (hero.Center.X > (currentMap[0].Length - 4) * tileSize) {
+            if (hero.Position.X > (currentMap[0].Length - 4) * tileSize) {
                 offsetPosition.X = (currentMap[0].Length - 8) * tileSize;
             }
-            if (hero.Center.Y > (currentMap.Length - 3) * tileSize) {
+            if (hero.Position.Y > (currentMap.Length - 3) * tileSize) {
                 offsetPosition.Y = (currentMap.Length - 6) * tileSize;
             }
             currentMap.Render(offsetPosition,hero.Center);
