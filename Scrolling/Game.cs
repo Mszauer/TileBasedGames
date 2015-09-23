@@ -22,14 +22,13 @@ namespace Scrolling {
         protected Map room1 = null;
         protected int[][] room1Layout = new int[][] {
             new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0 },
-            new int[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
+            new int[] { 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 },
+            new int[] { 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 },
+            new int[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1 },
+            new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2 },
+            new int[] { 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1 },
+            new int[] { 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1 },
             new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-
         };
         protected Map room2 = null;
         protected int[][] room2Layout = new int[][] {
@@ -80,8 +79,8 @@ namespace Scrolling {
             hero = new PlayerCharacter(heroSheet, new Point(spawnTile.X * tileSize, spawnTile.Y * tileSize));
             room1 = new Map(room1Layout, spriteSheets, spriteSources, 2, 0);
             room2 = new Map(room2Layout, spriteSheets, spriteSources, 0, 2);
-            room1[4][7].MakeDoor(room2, new Point(1, 1));
-            room2[1][0].MakeDoor(room1, new Point(6, 4));
+            room1[4][13].MakeDoor(room2, new Point(1, 1));
+            room2[1][0].MakeDoor(room1, new Point(12, 4));
             currentMap = room1;
 
             room1.AddEnemy(npcSheet, new Point(6 * tileSize, 1 * tileSize), true);
@@ -127,8 +126,21 @@ namespace Scrolling {
             PointF offsetPosition = new PointF();
             offsetPosition.X = hero.Position.X - (float)(4 * tileSize);
             offsetPosition.Y = hero.Position.Y - (float)(3 * tileSize);
-
-            currentMap.Render(offsetPosition);
+            // If the hero is less than half the camera close to the left or top corner
+            if (hero.Center.X < 4 * tileSize) {
+                offsetPosition.X = 0;
+            }
+            if (hero.Center.Y < 4 * tileSize) {
+                offsetPosition.Y = 0;
+            }
+            // If the hero is less than half the camera close to the bottom or right corner
+            if (hero.Center.X > (currentMap[0].Length - 4) * tileSize) {
+                offsetPosition.X = (currentMap[0].Length - 8) * tileSize;
+            }
+            if (hero.Center.Y > (currentMap.Length - 3) * tileSize) {
+                offsetPosition.Y = (currentMap.Length - 6) * tileSize;
+            }
+            currentMap.Render(offsetPosition,hero.Center);
             /*
             foreach (PointF corner in hero.Corners) {
                 if (!GetTile(corner).Walkable) {

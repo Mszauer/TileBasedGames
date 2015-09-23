@@ -22,6 +22,8 @@ namespace Scrolling {
             Rectangle renderRect = new Rectangle(0, 0, 10, 10);
             renderRect.X = (int)(Position.X - 5.0f);
             renderRect.Y = (int)(Position.Y - 5.0f);
+            renderRect.X -= (int)offsetPosition.X;
+            renderRect.Y -= (int)offsetPosition.Y;
             GraphicsManager.Instance.DrawRect(renderRect, Color.Red);
         }
     }

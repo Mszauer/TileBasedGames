@@ -27,7 +27,8 @@ namespace Scrolling {
             Point renderPos = new Point(WorldPosition.X, WorldPosition.Y);
             renderPos.X = (int)(Scale * renderPos.X);
             renderPos.Y = (int)(Scale * renderPos.Y);
-
+            renderPos.X -= (int)offsetPosition.X;
+            renderPos.Y -= (int)offsetPosition.Y;
             TextureManager.Instance.Draw(Sprite, renderPos, Scale, Source);
         }
         public void Destroy() {

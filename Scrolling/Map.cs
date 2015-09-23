@@ -114,9 +114,24 @@ namespace Scrolling {
                 }
             }
         }
-        public void Render(PointF offsetPosition) {
-            for (int h = 0; h < tileMap.Length; h++) {
-                for (int w = 0; w < tileMap[h].Length; w++) {
+        public void Render(PointF offsetPosition, PointF cameraCenter) {
+            int minX = (int)cameraCenter.X - 4 * 30 - 30;
+            int minY = (int)cameraCenter.Y - 4 * 30 - 30;
+            int maxX = (int)cameraCenter.X + 4 * 30 + 30;
+            int maxY = (int)cameraCenter.Y + 4 * 30 + 30;
+            minX /= 30;
+            minY /= 30;
+            maxX /= 30;
+            maxY /= 30;
+            for (int h = minY; h < maxY; h++) {
+                for (int w = minX; w < maxX; w++) {
+                    if (h < 0 || w < 0) {
+                        continue;
+                    }
+                    if (h >= tileMap.Length || w > tileMap[h].Length) {
+                        continue;
+                    }
+                    //what if the two maps aren't equal in size? CRASHES
                     tileMap[h][w].Render(offsetPosition);
                 }
             }
