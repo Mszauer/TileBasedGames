@@ -36,7 +36,7 @@ namespace DepthBase {
             Rectangle renderRect = new Rectangle(Source.Location, Source.Size);
             if (renderRect.Height != 30) {
                 int difference = renderRect.Height - 30;
-                renderRect.Y -= difference;
+                renderPos.Y -= difference;
             }
             //Draw tile
             TextureManager.Instance.Draw(Sprite, renderPos, Scale, renderRect);

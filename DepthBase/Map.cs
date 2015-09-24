@@ -33,8 +33,8 @@ namespace DepthBase {
                     Rectangle source = sources[layout[i][j]];
 
                     Point worldPosition = new Point();
-                    worldPosition.X = (int)(j * source.Width);
-                    worldPosition.Y = (int)(i * source.Height);
+                    worldPosition.X = (int)(j * 30);
+                    worldPosition.Y = (int)(i * 30);
                     result[i][j] = new Tile(sheets, source);
                     result[i][j].Walkable = false;
                     result[i][j].IsDoor = false;
@@ -110,6 +110,7 @@ namespace DepthBase {
                 Rectangle intersection = Intersections.Rect(items[i].Rect, hero.Rect);
                 if (intersection.Height * intersection.Width > 0) {
                     Game.Instance.Score += items[i].Value;
+                    items[i].Destroy();
                     items.RemoveAt(i);
                 }
             }

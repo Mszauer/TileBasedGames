@@ -23,10 +23,12 @@ namespace DepthBase {
         protected int[][] room1Layout = new int[][] {
             new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
             new int[] { 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2 },
+            new int[] { 1, 3, 4, 5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 },
+            new int[] { 1, 6, 7, 8, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1 },
+            new int[] { 1, 9,10, 9, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2 },
             new int[] { 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1 },
+            new int[] { 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1 },
+            new int[] { 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1 },
             new int[] { 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1 },
             new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
         };
@@ -42,9 +44,17 @@ namespace DepthBase {
         protected Map currentMap = null;
 
         protected Rectangle[] spriteSources = new Rectangle[] {
-            new Rectangle(466,32,30,30),
-            new Rectangle(466,1,30,30),
-            new Rectangle(32,187,30,30)
+            /* 0*/new Rectangle(466,32,30,30),
+            /* 1*/new Rectangle(466,1,30,30),
+            /* 2*/new Rectangle(32,187,30,30),
+            /* 3*/new Rectangle(32,280,30,40), // Top-left
+            /* 4*/new Rectangle(63,280,30,40), // Top-middle
+            /* 5*/new Rectangle(94,280,30,40), // Top-right
+            /* 6*/new Rectangle(32,321,30,30), // Middle-left
+            /* 7*/new Rectangle(63,321,30,30), // Middle-middle
+            /* 8*/new Rectangle(94,321,30,30), // Middle-right
+            /* 9*/new Rectangle(32,352,30,30),
+            /*10*/new Rectangle(63,352,30,30)
         };
         public Tile GetTile(PointF pixelPoint) {
             return currentMap[(int)pixelPoint.Y / 30][(int)pixelPoint.X / 30];
@@ -85,7 +95,7 @@ namespace DepthBase {
 
             room1.AddEnemy(npcSheet, new Point(6 * tileSize, 1 * tileSize), true);
             room2.AddEnemy(npcSheet, new Point(1 * tileSize, 4 * tileSize), false);
-            room1.AddItem(spriteSheets, new Rectangle(350, 255, 16, 16), 10, new Point(3 * tileSize + 7, 2 * tileSize + 7));
+            room1.AddItem(spriteSheets, new Rectangle(350, 255, 16, 16), 10, new Point(4 * tileSize + 7, 2 * tileSize + 7));
             room1.AddItem(spriteSheets, new Rectangle(381, 256, 13, 15), 20, new Point(5 * tileSize + 7, 4 * tileSize + 7));
             room2.AddItem(spriteSheets, new Rectangle(412, 256, 16, 15), 30, new Point(4 * tileSize + 7, 2 * tileSize + 7));
         }
@@ -172,7 +182,6 @@ namespace DepthBase {
             room1.Destroy();
             room2.Destroy();
             hero.Destroy();
-
         }
     }
 }
