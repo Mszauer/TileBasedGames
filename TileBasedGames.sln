@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Items", "Items\Items.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrolling", "Scrolling\Scrolling.csproj", "{A7AA99F4-281B-442B-949D-0C42D97B4E26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepthBase", "DepthBase\DepthBase.csproj", "{5F7FD35F-59D4-492B-A7F8-F07F529CEC37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{A7AA99F4-281B-442B-949D-0C42D97B4E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7AA99F4-281B-442B-949D-0C42D97B4E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7AA99F4-281B-442B-949D-0C42D97B4E26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F7FD35F-59D4-492B-A7F8-F07F529CEC37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7FD35F-59D4-492B-A7F8-F07F529CEC37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7FD35F-59D4-492B-A7F8-F07F529CEC37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7FD35F-59D4-492B-A7F8-F07F529CEC37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
