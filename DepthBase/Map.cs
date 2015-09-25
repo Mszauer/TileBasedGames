@@ -100,6 +100,7 @@ namespace DepthBase {
                 for (int j = projectiles.Count - 1; j >= 0; j--) {
                     intersection = Intersections.Rect(enemies[i].Rect, projectiles[j].Rect);
                     if (intersection.Width * intersection.Height > 0) {
+                        enemies[i].Destroy();
                         enemies.RemoveAt(i);
                         projectiles.RemoveAt(j);
                         break;

@@ -34,7 +34,9 @@ namespace GameFramework {
 
         private float zNear = -1.0f;
         private float zFar = 1.0f;
-        private float depthStepValue = 0.05f;
+        private float depthStepValue = 0.0005f;
+
+        private float numberOfSprites = 1000;
 
         // http://stackoverflow.com/questions/24266815/render-the-depth-buffer-in-opengl-without-shaders
         public Image GetDepthBuffer() {
@@ -92,6 +94,7 @@ namespace GameFramework {
         public void SetDepthRange(float near, float far) {
             zNear = near;
             zFar = far;
+            depthStepValue = (zFar - zNear) / numberOfSprites;
         }
 
         public float Depth {
@@ -127,6 +130,7 @@ namespace GameFramework {
             lastClear = Color.CadetBlue;
             game = window;
             currentDepth = zNear;
+            depthStepValue = (zFar - zNear) / numberOfSprites;
             depthStep = depthStepValue;
 
             GL.Enable(EnableCap.Texture2D);
