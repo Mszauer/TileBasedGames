@@ -133,6 +133,7 @@ namespace DepthBuffer {
                     if (h >= tileMap.Length || w >= tileMap[h].Length) {
                         continue;
                     }
+                    GraphicsManager.Instance.SetDepth(h * 20 + w);
                     tileMap[h][w].Render(offsetPosition);
                 }
             }

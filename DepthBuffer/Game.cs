@@ -86,6 +86,8 @@ namespace DepthBuffer {
             projectiles = new List<Bullet>();
             TextureManager.Instance.UseNearestFiltering = true;
 
+            GraphicsManager.Instance.SetDepth(8);
+
             hero = new PlayerCharacter(heroSheet, new Point(spawnTile.X * tileSize, spawnTile.Y * tileSize), 20);
             room1 = new Map(room1Layout, spriteSheets, spriteSources, 2, 0);
             room2 = new Map(room2Layout, spriteSheets, spriteSources, 0, 2);

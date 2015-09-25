@@ -54,6 +54,9 @@ namespace DepthBuffer {
             this.height = height;
         }
         public void Render(PointF offsetPosition) {
+
+            GraphicsManager.Instance.SetDepth(Corners[CORNER_BOTTOM_RIGHT].Y * 30 + Corners[CORNER_BOTTOM_RIGHT].X+0.5f) //.x .y?
+            
             Point renderPosition = new Point((int)Position.X, (int)Position.Y);
             renderPosition.X -= (int)offsetPosition.X;
             renderPosition.Y -= (int)offsetPosition.Y;
