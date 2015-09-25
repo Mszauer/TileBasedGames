@@ -24,6 +24,7 @@ namespace DepthBuffer {
             renderRect.Y = (int)(Position.Y - 5.0f);
             renderRect.X -= (int)offsetPosition.X;
             renderRect.Y -= (int)offsetPosition.Y;
+            GraphicsManager.Instance.SetDepth(19 * 19);
             GraphicsManager.Instance.DrawRect(renderRect, Color.Red);
         }
     }

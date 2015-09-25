@@ -25,6 +25,9 @@ namespace DepthBuffer {
             Position = position;
         }
         public void Render(PointF offsetPosition) {
+            int xTile = Position.X / 30;
+            int yTile = (Position.Y-1) / 30;
+            GraphicsManager.Instance.SetDepth(yTile * 20 + xTile + 0.2f);
             Point renderPosition = new Point((int)Position.X, (int)Position.Y);
             renderPosition.X -= (int)offsetPosition.X;
             renderPosition.Y -= (int)offsetPosition.Y;
