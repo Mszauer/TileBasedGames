@@ -4,7 +4,7 @@ using GameFramework;
 using System.Drawing;
 using OpenTK;
 
-namespace DepthBuffer {
+namespace Isometric {
     class Game {
         protected Point spawnTile = new Point(2, 1);
         protected PlayerCharacter hero = null;
@@ -15,23 +15,19 @@ namespace DepthBuffer {
         PointF offsetPosition = new PointF();
         protected List<Bullet> projectiles = null;
 
-        protected string spriteSheets = "Assets/HouseTiles.png";
+        protected string spriteSheets = "Assets/isometric.png";
         protected string heroSheet = "Assets/Link.png";
         protected string npcSheet = "Assets/NPC.png";
 
         protected Map room1 = null;
         protected int[][] room1Layout = new int[][] {
-            new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 3, 4, 5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 6, 7, 8, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1 },
-            new int[] { 1, 9,10, 9, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1 },
-            new int[] { 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-        };
+            new int[] { 1, 1, 1, 1, 1, 1, 1, 1},
+            new int[] { 1, 0, 0, 0, 0, 0, 0, 1},
+            new int[] { 1, 0, 0, 0, 1, 0, 0, 1},
+            new int[] { 1, 0, 1, 0, 0, 0, 0, 1},
+            new int[] { 1, 0, 0, 0, 0, 0, 0, 2},
+            new int[] { 1, 1, 1, 1, 1, 1, 1, 1},
+            };
         protected Map room2 = null;
         protected int[][] room2Layout = new int[][] {
             new int[] { 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -44,17 +40,9 @@ namespace DepthBuffer {
         protected Map currentMap = null;
 
         protected Rectangle[] spriteSources = new Rectangle[] {
-            /* 0*/new Rectangle(466,32,30,30),
-            /* 1*/new Rectangle(466,1,30,30),
-            /* 2*/new Rectangle(32,187,30,30),
-            /* 3*/new Rectangle(32,280,30,40), // Top-left
-            /* 4*/new Rectangle(63,280,30,40), // Top-middle
-            /* 5*/new Rectangle(94,280,30,40), // Top-right
-            /* 6*/new Rectangle(32,321,30,30), // Middle-left
-            /* 7*/new Rectangle(63,321,30,30), // Middle-middle
-            /* 8*/new Rectangle(94,321,30,30), // Middle-right
-            /* 9*/new Rectangle(32,352,30,30),
-            /*10*/new Rectangle(63,352,30,30)
+            /* 0*/new Rectangle(120,166,138,170),
+            /* 1*/new Rectangle(294,147,138,90),
+            /* 2*/new Rectangle(120,166,138,70)
         };
         public Tile GetTile(PointF pixelPoint) {
             return currentMap[(int)pixelPoint.Y / 30][(int)pixelPoint.X / 30];
@@ -82,7 +70,8 @@ namespace DepthBuffer {
         public void Initialize(OpenTK.GameWindow window) {
             Window = window;
             //window.ClientSize = new Size(room1Layout[0].Length * tileSize, room1Layout.Length * tileSize);
-            Window.ClientSize = new Size(8 * tileSize, 6 * tileSize);
+            //Window.ClientSize = new Size(8 * tileSize, 6 * tileSize);
+            Window.ClientSize = new Size(990, 550);
             projectiles = new List<Bullet>();
             TextureManager.Instance.UseNearestFiltering = true;
 
@@ -91,8 +80,8 @@ namespace DepthBuffer {
             hero = new PlayerCharacter(heroSheet, new Point(spawnTile.X * tileSize, spawnTile.Y * tileSize), 20);
             room1 = new Map(room1Layout, spriteSheets, spriteSources, 2, 0);
             room2 = new Map(room2Layout, spriteSheets, spriteSources, 0, 2);
-            room1[4][13].MakeDoor(room2, new Point(1, 1));
-            room2[1][0].MakeDoor(room1, new Point(12, 4));
+            room1[4][7].MakeDoor(room2, new Point(1, 1));
+            room2[1][0].MakeDoor(room1, new Point(6, 4));
             currentMap = room1;
 
             room1.AddEnemy(npcSheet, new Point(6 * tileSize, 1 * tileSize), true);
@@ -136,8 +125,13 @@ namespace DepthBuffer {
         }
         public void Render() {
             PointF offsetPosition = new PointF();
+            //temp code
+            offsetPosition.X = -200.0f;
+            offsetPosition.Y = 150.0f;
+            /*
             offsetPosition.X = hero.Position.X - (float)(4 * tileSize);
             offsetPosition.Y = hero.Position.Y - (float)(3 * tileSize);
+            
             // If the hero is less than half the camera close to the left or top corner
             if (hero.Position.X < 4 * tileSize) {
                 offsetPosition.X = 0;
@@ -152,6 +146,7 @@ namespace DepthBuffer {
             if (hero.Position.Y > (currentMap.Length - 3) * tileSize) {
                 offsetPosition.Y = (currentMap.Length - 6) * tileSize;
             }
+            */
             currentMap.Render(offsetPosition, hero.Center);
             /*
             foreach (PointF corner in hero.Corners) {

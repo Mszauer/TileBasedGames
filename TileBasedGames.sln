@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepthBase", "DepthBase\Dept
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepthBuffer", "DepthBuffer\DepthBuffer.csproj", "{9868BFCE-1728-4CD8-A16E-EFD37383B7F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Isometric", "Isometric\Isometric.csproj", "{AD0245D4-AAF3-4C71-9F7E-6D2B6D4B3C25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{9868BFCE-1728-4CD8-A16E-EFD37383B7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9868BFCE-1728-4CD8-A16E-EFD37383B7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9868BFCE-1728-4CD8-A16E-EFD37383B7F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD0245D4-AAF3-4C71-9F7E-6D2B6D4B3C25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD0245D4-AAF3-4C71-9F7E-6D2B6D4B3C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD0245D4-AAF3-4C71-9F7E-6D2B6D4B3C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD0245D4-AAF3-4C71-9F7E-6D2B6D4B3C25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
