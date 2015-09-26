@@ -40,7 +40,7 @@ namespace Isometric {
         protected Map currentMap = null;
 
         protected Rectangle[] spriteSources = new Rectangle[] {
-            /* 0*/new Rectangle(120,166,138,170),
+            /* 0*/new Rectangle(120,166,138,70),
             /* 1*/new Rectangle(294,147,138,90),
             /* 2*/new Rectangle(120,166,138,70)
         };

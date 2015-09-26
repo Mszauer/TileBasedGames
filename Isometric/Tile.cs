@@ -41,7 +41,7 @@ namespace Isometric {
                 renderPos.Y -= difference;
             }
             //Draw tile
-            TextureManager.Instance.Draw(Sprite,new Point((int)renderPos.X,(int)renderPos.Y), Scale, renderRect);
+            TextureManager.Instance.Draw(Sprite, new Point((int)renderPos.X, (int)renderPos.Y), Scale, renderRect);
         }
         public void Destroy() {
             TextureManager.Instance.UnloadTexture(Sprite);
