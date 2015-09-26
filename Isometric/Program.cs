@@ -40,7 +40,7 @@ namespace Isometric {
         [STAThread]
         static void Main(string[] args) {
             Window = new OpenTK.GameWindow();
-            Window.Title = "Items";
+            Window.Title = "Isometric";
             Window.Load += new EventHandler<EventArgs>(Initialize);
             Window.UpdateFrame += new EventHandler<FrameEventArgs>(Update);
             Window.RenderFrame += new EventHandler<FrameEventArgs>(Render);
