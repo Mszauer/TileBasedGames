@@ -11,7 +11,6 @@ namespace Isometric {
         public OpenTK.GameWindow Window = null;
         public bool GameOver = false;
         public static bool ViewWorldSpace = false;
-        //protected readonly int tileSize = 30;
         public static readonly int TILE_W = 69;
         public static readonly int TILE_H = 70;
         public int Score = 0;

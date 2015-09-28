@@ -140,8 +140,8 @@ namespace GameFramework {
             GL.Enable(EnableCap.DepthTest);
             GL.ClearColor(Color.CadetBlue);
 
-            //GL.AlphaFunc(AlphaFunction.Greater, 0.1f);
-            //GL.Enable(EnableCap.AlphaTest);
+            GL.AlphaFunc(AlphaFunction.Greater, 0.1f);
+            GL.Enable(EnableCap.AlphaTest);
 
             fontHandle = GetFontTexture();
 

@@ -13,15 +13,13 @@ namespace Isometric {
         public Dictionary<string, Rectangle[]> SpriteSources { get; private set; }
         public string currentSprite { get; set; }
         public int currentFrame = 0;
-        protected float height = -1;
         float animFPS = 1.0f / 9.0f;
         float animTimer = 0f;
         public Rectangle Rect {
             get {
-                if (height >= 0) {
-                    return new Rectangle((int)Position.X, (int)Position.Y, SpriteSources[currentSprite][currentFrame].Width, (int)height);
-                }
-                return new Rectangle((int)Position.X, (int)Position.Y, SpriteSources[currentSprite][currentFrame].Width, SpriteSources[currentSprite][currentFrame].Height);
+                int width = SpriteSources[currentSprite][currentFrame].Width/2;
+                int height = width;
+                return new Rectangle((int)Position.X, (int)Position.Y, width, height);
             }
         }
         public PointF Center {
@@ -31,11 +29,8 @@ namespace Isometric {
         }
         public PointF[] Corners {
             get {
-                float w = SpriteSources[currentSprite][currentFrame].Width;
-                float h = SpriteSources[currentSprite][currentFrame].Height; ;
-                if (height >= 0) {
-                    h = height;
-                }
+                float w = Rect.Width;
+                float h = Rect.Height;
                 return new PointF[] {
                     new PointF(Position.X,Position.Y),
                     new PointF(Position.X+w,Position.Y),
@@ -51,10 +46,9 @@ namespace Isometric {
         public Character(string spritePath, Point pos, float height) {
             Sprite = TextureManager.Instance.LoadTexture(spritePath);
             Position = pos;
-            this.height = height;
         }
         public void Render(PointF offsetPosition) {
-            int tileX = (int)Corners[CORNER_BOTTOM_RIGHT].X / 30;
+            int tileX = (int)(Corners[CORNER_BOTTOM_RIGHT].X -1) / 30;
             int tileY = (int)(Corners[CORNER_BOTTOM_RIGHT].Y - 1) / 30;
             GraphicsManager.Instance.SetDepth(tileY * 20 + tileX + 0.5f);
 
@@ -64,29 +58,18 @@ namespace Isometric {
 
             //Apply iso transformation
             renderPosition = Map.CartToIso(renderPosition);
-
-            if (height >= 0) {
-                //find depth offset
-                int difference = SpriteSources[currentSprite][currentFrame].Height - (int)height;
+            //Allign registration points
+            renderPosition.X += 25;
+            if (SpriteSources[currentSprite][currentFrame].Height > Rect.Height) {
                 //apply  depth offset
-                renderPosition.Y -= difference;
+                renderPosition.Y -= Rect.Height;
             }
-            //GraphicsManager.Instance.DrawRect(Rect, Color.Red);
-            TextureManager.Instance.Draw(Sprite, new Point((int)renderPosition.X,(int)renderPosition.Y), 1.0f, SpriteSources[currentSprite][currentFrame]);
-            /*Rectangle center = new Rectangle((int)Center.X - 5, (int)Center.Y - 5, 10, 10);
-            GraphicsManager.Instance.DrawRect(center, Color.Yellow);
-            foreach (PointF corner in Corners) {
-                Rectangle rect = new Rectangle((int)corner.X - 5, (int)corner.Y - 5, 10, 10);
-                GraphicsManager.Instance.DrawRect(rect, Color.Green);
+            if (Game.ViewWorldSpace) {
+                GraphicsManager.Instance.DrawRect(Rect, Color.SteelBlue);
             }
-            //get a 3x3 rect, centered on the top left pixel
-            Rectangle positionLocator = new Rectangle((int)Position.X - 1, (int)Position.Y - 1, 3, 3);
-            //apply offset
-            positionLocator.X -= (int)offsetPosition.X;
-            positionLocator.Y -= (int)offsetPosition.Y;
-            //draw indicator
-            GraphicsManager.Instance.DrawRect(positionLocator, Color.Yellow);
-            */
+            else {
+                TextureManager.Instance.Draw(Sprite, new Point((int)renderPosition.X, (int)renderPosition.Y), 1.0f, SpriteSources[currentSprite][currentFrame]);
+            }
         }
         public void Destroy() {
             TextureManager.Instance.UnloadTexture(Sprite);
