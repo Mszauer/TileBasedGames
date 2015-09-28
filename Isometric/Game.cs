@@ -42,7 +42,7 @@ namespace Isometric {
         protected Rectangle[] spriteSources = new Rectangle[] {
             /* 0*/new Rectangle(120,166,138,70),
             /* 1*/new Rectangle(294,147,138,90),
-            /* 2*/new Rectangle(120,166,138,70)
+            /* 2*/ new Rectangle(120,166,138,70)
         };
         public Tile GetTile(PointF pixelPoint) {
             return currentMap[(int)pixelPoint.Y / 30][(int)pixelPoint.X / 30];
