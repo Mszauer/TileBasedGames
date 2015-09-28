@@ -35,8 +35,8 @@ namespace Isometric {
                     Point worldPosition = new Point();
                     //worldPosition.X = (int)(j * 30);
                     //worldPosition.Y = (int)(i * 30);
-                    worldPosition.X = (int)(j * (138 / 2));
-                    worldPosition.Y = (int)(i * (70));
+                    worldPosition.X = (int)(j * Game.TILE_W);
+                    worldPosition.Y = (int)(i * Game.TILE_H);
                     result[i][j] = new Tile(sheets, source);
                     result[i][j].Walkable = false;
                     result[i][j].IsDoor = false;
@@ -57,7 +57,7 @@ namespace Isometric {
                 for (int col = 0; col < tileMap[row].Length; col++) {
                     if (tileMap[row][col].IsDoor) {
                         //get doors bouding rectangle
-                        Rectangle doorRect = new Rectangle(col * 30, row * 30, 30, 30);
+                        Rectangle doorRect = new Rectangle(col * Game.TILE_W, row * Game.TILE_W, Game.TILE_W, Game.TILE_H);
                         //get a small rectangle in center of the player
                         Rectangle playerCenter = new Rectangle((int)hero.Center.X - 2, (int)hero.Center.Y - 2, 4, 4);
 
@@ -65,8 +65,8 @@ namespace Isometric {
                         Rectangle intersection = Intersections.Rect(doorRect, playerCenter);
                         if (intersection.Width * intersection.Height > 0) {
                             result = tileMap[row][col].DoorTarget;
-                            hero.Position.X = tileMap[row][col].DoorLocation.X * 30;
-                            hero.Position.Y = tileMap[row][col].DoorLocation.Y * 30;
+                            hero.Position.X = tileMap[row][col].DoorLocation.X * Game.TILE_W;
+                            hero.Position.Y = tileMap[row][col].DoorLocation.Y * Game.TILE_H;
                         }
                     }
                 }
@@ -81,8 +81,8 @@ namespace Isometric {
         }
         public void Update(float dTime, PlayerCharacter hero, List<Bullet> projectiles) {
             for (int i = projectiles.Count - 1; i >= 0; i--) {
-                int xTile = (int)projectiles[i].Position.X / 30;
-                int yTile = (int)projectiles[i].Position.Y / 30;
+                int xTile = (int)projectiles[i].Position.X / Game.TILE_W;
+                int yTile = (int)projectiles[i].Position.Y / Game.TILE_H;
                 if (xTile >= this[0].Length || xTile < 0) {
                     projectiles.RemoveAt(i);
                 }
@@ -119,14 +119,14 @@ namespace Isometric {
             }
         }
         public void Render(PointF offsetPosition, PointF cameraCenter) {
-            int minX = (int)cameraCenter.X - 8 * 30 - 30;
-            int minY = (int)cameraCenter.Y - 6 * 30 - 30;
-            int maxX = (int)cameraCenter.X + 8 * 30 + 30;
-            int maxY = (int)cameraCenter.Y + 6 * 30 + 30;
-            minX /= 30;
-            minY /= 30;
-            maxX /= 30;
-            maxY /= 30;
+            int minX = (int)cameraCenter.X - 8 * Game.TILE_W - Game.TILE_W;
+            int minY = (int)cameraCenter.Y - 6 * Game.TILE_H - Game.TILE_H;
+            int maxX = (int)cameraCenter.X + 8 * Game.TILE_W + Game.TILE_W;
+            int maxY = (int)cameraCenter.Y + 6 * Game.TILE_H + Game.TILE_H;
+            minX /= Game.TILE_W;
+            minY /= Game.TILE_H;
+            maxX /= Game.TILE_W;
+            maxY /= Game.TILE_H;
             for (int h = minY; h < maxY; h++) {
                 for (int w = minX; w < maxX; w++) {
                     if (h < 0 || w < 0) {
@@ -161,6 +161,9 @@ namespace Isometric {
         }
         //convert top down to iso
         public static PointF CartToIso(PointF cartesian) {
+            if (Game.ViewWorldSpace) {
+                return cartesian;
+            }
             PointF iso = new PointF();
             iso.X = cartesian.X - cartesian.Y;
             iso.Y = (cartesian.X + cartesian.Y) / 2;
@@ -168,6 +171,9 @@ namespace Isometric {
         }
         //convert iso to top down
         public static PointF IsoToCart(PointF isometric) {
+            if (Game.ViewWorldSpace) {
+                return isometric;
+            }
             PointF cart = new PointF();
             cart.X = (2 * isometric.Y + isometric.X) / 2;
             cart.Y = (2 * isometric.Y - isometric.X) / 2;

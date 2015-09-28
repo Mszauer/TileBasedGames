@@ -34,6 +34,7 @@ namespace Isometric {
             renderPos.Y -= (int)offsetPosition.Y;
             //convert to iso
             renderPos = Map.CartToIso(renderPos);
+            
             //
             Rectangle renderRect = new Rectangle(Source.Location, Source.Size);
             if (renderRect.Height != 70) {
@@ -41,7 +42,17 @@ namespace Isometric {
                 renderPos.Y -= difference;
             }
             //Draw tile
-            TextureManager.Instance.Draw(Sprite, new Point((int)renderPos.X, (int)renderPos.Y), Scale, renderRect);
+            if (Game.ViewWorldSpace) {
+                Rectangle r = new Rectangle(WorldPosition, new Size(69, 70));
+                Color c = Color.LightSteelBlue;
+                if (Walkable) {
+                    c = Color.LightSlateGray;
+                }
+                GraphicsManager.Instance.DrawRect(r,c);
+            }
+            else {
+                TextureManager.Instance.Draw(Sprite, new Point((int)renderPos.X, (int)renderPos.Y), Scale, renderRect);
+            }
         }
         public void Destroy() {
             TextureManager.Instance.UnloadTexture(Sprite);

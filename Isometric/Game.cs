@@ -10,9 +10,11 @@ namespace Isometric {
         protected PlayerCharacter hero = null;
         public OpenTK.GameWindow Window = null;
         public bool GameOver = false;
-        protected readonly int tileSize = 30;
+        public static bool ViewWorldSpace = false;
+        //protected readonly int tileSize = 30;
+        public static readonly int TILE_W = 69;
+        public static readonly int TILE_H = 70;
         public int Score = 0;
-        PointF offsetPosition = new PointF();
         protected List<Bullet> projectiles = null;
 
         protected string spriteSheets = "Assets/isometric.png";
@@ -42,15 +44,15 @@ namespace Isometric {
         protected Rectangle[] spriteSources = new Rectangle[] {
             /* 0*/new Rectangle(120,166,138,70),
             /* 1*/new Rectangle(294,147,138,90),
-            /* 2*/ new Rectangle(120,166,138,70)
+            /* 2*/new Rectangle(120,166,138,70)
         };
         public Tile GetTile(PointF pixelPoint) {
-            return currentMap[(int)pixelPoint.Y / 30][(int)pixelPoint.X / 30];
+            return currentMap[(int)pixelPoint.Y / TILE_H][(int)pixelPoint.X / TILE_W];
         }
         public Rectangle GetTileRect(PointF pixelPoint) {
-            int xTile = (int)pixelPoint.X / 30;//integer math
-            int yTile = (int)pixelPoint.Y / 30;
-            Rectangle result = new Rectangle(xTile * 30, yTile * 30, 30, 30);
+            int xTile = (int)pixelPoint.X / TILE_W;//integer math
+            int yTile = (int)pixelPoint.Y / TILE_H;
+            Rectangle result = new Rectangle(xTile * TILE_W, yTile * TILE_H, TILE_W, TILE_H);
             return result;
         }
         //Singleton
@@ -77,20 +79,28 @@ namespace Isometric {
 
             GraphicsManager.Instance.SetDepthRange(0, 21 * 21);
 
-            hero = new PlayerCharacter(heroSheet, new Point(spawnTile.X * tileSize, spawnTile.Y * tileSize), 20);
+            hero = new PlayerCharacter(heroSheet, new Point(spawnTile.X * TILE_W, spawnTile.Y * TILE_H), 20);
             room1 = new Map(room1Layout, spriteSheets, spriteSources, 2, 0);
             room2 = new Map(room2Layout, spriteSheets, spriteSources, 0, 2);
             room1[4][7].MakeDoor(room2, new Point(1, 1));
             room2[1][0].MakeDoor(room1, new Point(6, 4));
             currentMap = room1;
 
-            room1.AddEnemy(npcSheet, new Point(6 * tileSize, 1 * tileSize), true);
-            room2.AddEnemy(npcSheet, new Point(1 * tileSize, 4 * tileSize), false);
-            room1.AddItem(spriteSheets, new Rectangle(350, 255, 16, 16), 10, new Point(4 * tileSize + 7, 2 * tileSize + 7));
-            room1.AddItem(spriteSheets, new Rectangle(381, 256, 13, 15), 20, new Point(5 * tileSize + 7, 4 * tileSize + 7));
-            room2.AddItem(spriteSheets, new Rectangle(412, 256, 16, 15), 30, new Point(4 * tileSize + 7, 2 * tileSize + 7));
+            room1.AddEnemy(npcSheet, new Point(6 * TILE_W, 1 * TILE_H), true);
+            room2.AddEnemy(npcSheet, new Point(1 * TILE_W, 4 * TILE_H), false);
+            room1.AddItem(spriteSheets, new Rectangle(350, 255, 16, 16), 10, new Point(4 * TILE_W + 7, 2 * TILE_H + 7));
+            room1.AddItem(spriteSheets, new Rectangle(381, 256, 13, 15), 20, new Point(5 * TILE_W + 7, 4 * TILE_H + 7));
+            room2.AddItem(spriteSheets, new Rectangle(412, 256, 16, 15), 30, new Point(4 * TILE_W + 7, 2 * TILE_H + 7));
         }
         public void Update(float dt) {
+            if (InputManager.Instance.KeyPressed(OpenTK.Input.Key.U)) {
+                if (ViewWorldSpace == false) {
+                    ViewWorldSpace = true;
+                }
+                else {
+                    ViewWorldSpace = false;
+                }
+            }
             if (!GameOver) {
                 currentMap = currentMap.ResolveDoors(hero);
                 hero.Update(dt);
@@ -118,7 +128,7 @@ namespace Isometric {
             else {
                 if (InputManager.Instance.KeyPressed(OpenTK.Input.Key.Space)) {
                     currentMap = room1;
-                    hero.Position = new Point(spawnTile.X * tileSize, spawnTile.Y * tileSize);
+                    hero.Position = new Point(spawnTile.X * TILE_W, spawnTile.Y * TILE_H);
                     GameOver = false;
                 }
             }
@@ -126,8 +136,11 @@ namespace Isometric {
         public void Render() {
             PointF offsetPosition = new PointF();
             //temp code
-            offsetPosition.X = -200.0f;
-            offsetPosition.Y = 150.0f;
+            if (!ViewWorldSpace) {
+                offsetPosition.X = -200.0f;
+                offsetPosition.Y = 150.0f;
+            }
+            
             /*
             offsetPosition.X = hero.Position.X - (float)(4 * tileSize);
             offsetPosition.Y = hero.Position.Y - (float)(3 * tileSize);
