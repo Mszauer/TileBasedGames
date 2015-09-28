@@ -18,8 +18,8 @@ namespace Isometric {
         protected List<Bullet> projectiles = null;
 
         protected string spriteSheets = "Assets/isometric.png";
-        protected string heroSheet = "Assets/Link.png";
-        protected string npcSheet = "Assets/NPC.png";
+        protected string heroSheet = "Assets/isometric.png";
+        protected string npcSheet = "Assets/isometric.png";
 
         protected Map room1 = null;
         protected int[][] room1Layout = new int[][] {

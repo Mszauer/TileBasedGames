@@ -58,9 +58,13 @@ namespace Isometric {
             int tileY = (int)(Corners[CORNER_BOTTOM_RIGHT].Y - 1) / 30;
             GraphicsManager.Instance.SetDepth(tileY * 20 + tileX + 0.5f);
 
-            Point renderPosition = new Point((int)Position.X, (int)Position.Y);
-            renderPosition.X -= (int)offsetPosition.X;
-            renderPosition.Y -= (int)offsetPosition.Y;
+            PointF renderPosition = new PointF(Position.X, Position.Y);
+            renderPosition.X -= offsetPosition.X;
+            renderPosition.Y -= offsetPosition.Y;
+
+            //Apply iso transformation
+            renderPosition = Map.CartToIso(renderPosition);
+
             if (height >= 0) {
                 //find depth offset
                 int difference = SpriteSources[currentSprite][currentFrame].Height - (int)height;
@@ -68,13 +72,13 @@ namespace Isometric {
                 renderPosition.Y -= difference;
             }
             //GraphicsManager.Instance.DrawRect(Rect, Color.Red);
-            TextureManager.Instance.Draw(Sprite, renderPosition, 1.0f, SpriteSources[currentSprite][currentFrame]);
+            TextureManager.Instance.Draw(Sprite, new Point((int)renderPosition.X,(int)renderPosition.Y), 1.0f, SpriteSources[currentSprite][currentFrame]);
             /*Rectangle center = new Rectangle((int)Center.X - 5, (int)Center.Y - 5, 10, 10);
             GraphicsManager.Instance.DrawRect(center, Color.Yellow);
             foreach (PointF corner in Corners) {
                 Rectangle rect = new Rectangle((int)corner.X - 5, (int)corner.Y - 5, 10, 10);
                 GraphicsManager.Instance.DrawRect(rect, Color.Green);
-            }*/
+            }
             //get a 3x3 rect, centered on the top left pixel
             Rectangle positionLocator = new Rectangle((int)Position.X - 1, (int)Position.Y - 1, 3, 3);
             //apply offset
@@ -82,6 +86,7 @@ namespace Isometric {
             positionLocator.Y -= (int)offsetPosition.Y;
             //draw indicator
             GraphicsManager.Instance.DrawRect(positionLocator, Color.Yellow);
+            */
         }
         public void Destroy() {
             TextureManager.Instance.UnloadTexture(Sprite);
