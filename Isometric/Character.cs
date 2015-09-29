@@ -48,8 +48,8 @@ namespace Isometric {
             Position = pos;
         }
         public void Render(PointF offsetPosition) {
-            int tileX = (int)(Corners[CORNER_BOTTOM_RIGHT].X -1) / 30;
-            int tileY = (int)(Corners[CORNER_BOTTOM_RIGHT].Y - 1) / 30;
+            int tileX = (int)(Corners[CORNER_BOTTOM_RIGHT].X -1) / Game.TILE_W;
+            int tileY = (int)(Corners[CORNER_BOTTOM_RIGHT].Y - 1) / Game.TILE_H;
             GraphicsManager.Instance.SetDepth(tileY * 20 + tileX + 0.5f);
 
             PointF renderPosition = new PointF(Position.X, Position.Y);
@@ -66,6 +66,7 @@ namespace Isometric {
             }
             if (Game.ViewWorldSpace) {
                 GraphicsManager.Instance.DrawRect(Rect, Color.SteelBlue);
+                Console.WriteLine("Drawing: " + Rect);
             }
             else {
                 TextureManager.Instance.Draw(Sprite, new Point((int)renderPosition.X, (int)renderPosition.Y), 1.0f, SpriteSources[currentSprite][currentFrame]);

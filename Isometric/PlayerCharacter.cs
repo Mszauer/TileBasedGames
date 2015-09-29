@@ -10,10 +10,10 @@ namespace Isometric {
     class PlayerCharacter : Character {
         public float speed = 90.0f;
         public PlayerCharacter(string spritePath, Point pos, float height) : base(spritePath, pos, height) {
-            AddSprite("Down", new Rectangle(52, 19, 85, 84), new Rectangle(87, 1, 24, 30));
-            AddSprite("Up", new Rectangle(266, 19, 85, 84), new Rectangle(141, 3, 22, 30));
-            AddSprite("Left", new Rectangle(155, 19, 85, 84), new Rectangle(31, 1, 26, 30));
-            AddSprite("Right", new Rectangle(375, 19, 85, 84), new Rectangle(167, 1, 26, 30));
+            AddSprite("Down", new Rectangle(52, 19, 85, 84));
+            AddSprite("Up", new Rectangle(266, 19, 85, 84));
+            AddSprite("Left", new Rectangle(155, 19, 85, 84));
+            AddSprite("Right", new Rectangle(375, 19, 85, 84));
             SetSprite("Down");
         }
         public void Update(float deltaTime) {

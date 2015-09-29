@@ -11,10 +11,10 @@ namespace Isometric {
         bool moveUpDown = false;
         float directions = 1.0f;
         public EnemyCharacter(string spritePath, Point pos, bool movingUpDown, float height) : base(spritePath, pos, height) {
-            AddSprite("Down", new Rectangle(52, 19, 85, 84), new Rectangle(101, 112, 29, 30));
-            AddSprite("Up", new Rectangle(266, 19, 85, 84), new Rectangle(167, 112, 30, 30));
-            AddSprite("Left", new Rectangle(155, 19, 85, 84), new Rectangle(34, 112, 30, 30));
-            AddSprite("Right", new Rectangle(375, 19, 85, 84), new Rectangle(234, 113, 30, 30));
+            AddSprite("Down", new Rectangle(52, 19, 85, 84));
+            AddSprite("Up", new Rectangle(266, 19, 85, 84));
+            AddSprite("Left", new Rectangle(155, 19, 85, 84));
+            AddSprite("Right", new Rectangle(375, 19, 85, 84));
             SetSprite("Down");
 
             moveUpDown = movingUpDown;
