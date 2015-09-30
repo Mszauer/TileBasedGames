@@ -3,29 +3,37 @@ using System.Drawing;
 
 namespace Isometric {
     class Bullet {
+        private int spriteSheetHandle;
+        private Rectangle sourceRect = new Rectangle(43,161,22,20); //from spritesheet
         public PointF Position = new PointF(0f, 0f);
         public PointF Velocity = new PointF(0f, 0f);
         public Rectangle Rect {
             get {
-                return new Rectangle((int)Position.X - 5, (int)Position.Y - 5, 10, 10);
+                return new Rectangle(new Point((int)Position.X,(int)Position.Y), new Size(sourceRect.Width / 2, sourceRect.Width / 2));
             }
         }
-        public Bullet(PointF pos, PointF vel) {
+        public Bullet(PointF pos, PointF vel, int sheetReferance) {
             Position = pos;
             Velocity = vel;
+            spriteSheetHandle = sheetReferance;
         }
         public void Update(float dTime) {
             Position.X += Velocity.X * dTime;
             Position.Y += Velocity.Y * dTime;
         }
         public void Render(PointF offsetPosition) {
-            Rectangle renderRect = new Rectangle(0, 0, 10, 10);
-            renderRect.X = (int)(Position.X - 5.0f);
-            renderRect.Y = (int)(Position.Y - 5.0f);
-            renderRect.X -= (int)offsetPosition.X;
-            renderRect.Y -= (int)offsetPosition.Y;
+            PointF renderPoint = new PointF(Position.X,Position.Y);
+            renderPoint.X -= (int)offsetPosition.X;
+            renderPoint.Y -= (int)offsetPosition.Y;
+            renderPoint = Map.CartToIso(renderPoint);
+            renderPoint.X += 57;//allign with registration point
             GraphicsManager.Instance.SetDepth(19 * 19);
-            GraphicsManager.Instance.DrawRect(renderRect, Color.Red);
+            if (Game.ViewWorldSpace) {
+                GraphicsManager.Instance.DrawRect(Rect, Color.Red);
+            }
+            else {
+                TextureManager.Instance.Draw(spriteSheetHandle, new Point((int)renderPoint.X,(int)renderPoint.Y), 1.0f, sourceRect);
+            }
         }
     }
 }

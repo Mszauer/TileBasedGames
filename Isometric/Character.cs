@@ -66,7 +66,6 @@ namespace Isometric {
             }
             if (Game.ViewWorldSpace) {
                 GraphicsManager.Instance.DrawRect(Rect, Color.SteelBlue);
-                Console.WriteLine("Drawing: " + Rect);
             }
             else {
                 TextureManager.Instance.Draw(Sprite, new Point((int)renderPosition.X, (int)renderPosition.Y), 1.0f, SpriteSources[currentSprite][currentFrame]);

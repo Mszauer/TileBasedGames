@@ -26,12 +26,20 @@ namespace Isometric {
         }
         public void Render(PointF offsetPosition) {
             int xTile = Position.X / 30;
-            int yTile = (Position.Y - 1) / 30;
+            int yTile = (Position.Y) / 30;
             GraphicsManager.Instance.SetDepth(yTile * 20 + xTile + 0.2f);
-            Point renderPosition = new Point((int)Position.X, (int)Position.Y);
+            PointF renderPosition = new PointF(Position.X,Position.Y);
             renderPosition.X -= (int)offsetPosition.X;
             renderPosition.Y -= (int)offsetPosition.Y;
-            TextureManager.Instance.Draw(Sprite, renderPosition, 1.0f, Source);
+            renderPosition = Map.CartToIso(renderPosition);
+            renderPosition.X += 50; //allign with registration point
+            if (Game.ViewWorldSpace) {
+                Rectangle r = new Rectangle(Position, new Size(Source.Width / 2, Source.Width / 2));
+                GraphicsManager.Instance.DrawRect(r, Color.DarkSeaGreen);
+            }
+            else {
+                TextureManager.Instance.Draw(Sprite, new Point((int)renderPosition.X,(int)renderPosition.Y), 1.0f, Source);
+            }
         }
         public void Destroy() {
             TextureManager.Instance.UnloadTexture(Sprite);

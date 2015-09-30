@@ -15,7 +15,7 @@ namespace Isometric {
         public static readonly int TILE_H = 70;
         public int Score = 0;
         protected List<Bullet> projectiles = null;
-
+        protected int Sprite = 0;
         protected string spriteSheets = "Assets/isometric.png";
         protected string heroSheet = "Assets/isometric.png";
         protected string npcSheet = "Assets/isometric.png";
@@ -74,6 +74,7 @@ namespace Isometric {
             //Window.ClientSize = new Size(8 * tileSize, 6 * tileSize);
             Window.ClientSize = new Size(990, 550);
             projectiles = new List<Bullet>();
+            Sprite = TextureManager.Instance.LoadTexture(spriteSheets);
             TextureManager.Instance.UseNearestFiltering = true;
 
             GraphicsManager.Instance.SetDepthRange(0, 21 * 21);
@@ -87,9 +88,9 @@ namespace Isometric {
 
             room1.AddEnemy(npcSheet, new Point(6 * TILE_W, 1 * TILE_H), true);
             room2.AddEnemy(npcSheet, new Point(1 * TILE_W, 4 * TILE_H), false);
-            room1.AddItem(spriteSheets, new Rectangle(350, 255, 16, 16), 10, new Point(4 * TILE_W + 7, 2 * TILE_H + 7));
-            room1.AddItem(spriteSheets, new Rectangle(381, 256, 13, 15), 20, new Point(5 * TILE_W + 7, 4 * TILE_H + 7));
-            room2.AddItem(spriteSheets, new Rectangle(412, 256, 16, 15), 30, new Point(4 * TILE_W + 7, 2 * TILE_H + 7));
+            room1.AddItem(spriteSheets, new Rectangle(20, 198, 44, 49), 10, new Point(3 * TILE_W, 2 * TILE_H + 7));
+            room1.AddItem(spriteSheets, new Rectangle(20, 198, 44, 49), 20, new Point(5 * TILE_W, 4 * TILE_H + 7));
+            room2.AddItem(spriteSheets, new Rectangle(20, 198, 44, 49), 30, new Point(4 * TILE_W, 2 * TILE_H + 7));
         }
         public void Update(float dt) {
             if (InputManager.Instance.KeyPressed(OpenTK.Input.Key.U)) {
@@ -117,7 +118,7 @@ namespace Isometric {
                     else if (hero.currentSprite == "right") {
                         velocity.X = 100.0f;
                     }
-                    projectiles.Add(new Bullet(hero.Center, velocity));
+                    projectiles.Add(new Bullet(hero.Center, velocity,Sprite));
                 }
                 for (int i = projectiles.Count - 1; i >= 0; i--) {
                     projectiles[i].Update(dt);
@@ -192,6 +193,7 @@ namespace Isometric {
             room1.Destroy();
             room2.Destroy();
             hero.Destroy();
+            TextureManager.Instance.UnloadTexture(Sprite);
         }
     }
 }
