@@ -75,8 +75,12 @@ namespace MouseToMove {
         public void Update(float dt) {
             currentMap = currentMap.ResolveDoors(hero);
             hero.Update(dt);
-            if (InputManager.Instance.MousePressed(OpenTK.Input.MouseButton.Left)) {
+            cursorTile = new Point(InputManager.Instance.MousePosition.X/TILE_SIZE, InputManager.Instance.MousePosition.Y / TILE_SIZE);
+            if (InputManager.Instance.MousePressed(OpenTK.Input.MouseButton.Left) || InputManager.Instance.KeyPressed(OpenTK.Input.Key.M)) {
                 if (currentMap[cursorTile.Y][cursorTile.X].Walkable) {
+                    if (currentMap[cursorTile.Y][cursorTile.X].IsDoor) {
+                      
+                    }
                     hero.SetTargetTile(cursorTile);
                 }
             }

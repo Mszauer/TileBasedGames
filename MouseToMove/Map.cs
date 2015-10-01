@@ -62,6 +62,7 @@ namespace MouseToMove {
                             result = tileMap[row][col].DoorTarget;
                             hero.Position.X = tileMap[row][col].DoorLocation.X * 30;
                             hero.Position.Y = tileMap[row][col].DoorLocation.Y * 30;
+                            hero.SetTargetTile(tileMap[row][col].DoorLocation);
                         }
                     }
                 }

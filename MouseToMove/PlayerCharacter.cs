@@ -11,7 +11,7 @@ namespace MouseToMove {
         public float speed = 90.0f;
         float animFPS = 1.0f / 9.0f;
         float animTimer = 0f;
-        protected Point targetTile = new Point(2, 3);
+        protected Point targetTile = new Point(2, 1);
         public void SetTargetTile(Point target) {
             targetTile = new Point(target.X, target.Y);
         }
@@ -60,6 +60,18 @@ namespace MouseToMove {
                     }
                 }
             }
+            else if (Position.X != currentTile.X) {
+                //More than two pixels away, walk
+                if (Math.Abs(Position.X - currentTile.X * Game.TILE_SIZE) > 2) {
+                    SetSprite("Left");
+                    Animate(deltaTime);
+                    Position.X -= speed * deltaTime;
+                }
+                //two pixels away, snap
+                else {
+                    Position.X = currentTile.X * Game.TILE_SIZE;
+                }
+            }
             if (targetTile.Y < currentTile.Y) {
                 SetSprite("Up");
                 Animate(deltaTime);
@@ -94,7 +106,16 @@ namespace MouseToMove {
                     }
                 }
             }
-
+            else if (Position.Y != currentTile.Y) {
+                if (Math.Abs(Position.Y - currentTile.Y * Game.TILE_SIZE) > 2) {
+                    SetSprite("Up");
+                    Animate(deltaTime);
+                    Position.Y -= speed * deltaTime;
+                }
+                else {
+                    Position.Y = currentTile.Y * Game.TILE_SIZE;
+                }
+            }
         }
         protected void Animate(float dTime) {
             animTimer += dTime;
