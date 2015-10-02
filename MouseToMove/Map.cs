@@ -21,8 +21,6 @@ namespace MouseToMove {
                 return tileMap.Length;
             }
         }
-        List<List<int>> mapFormat = new List<List<int>>();
-        protected Dictionary<int,Rectangle> spriteSources = new Dictionary<int, Rectangle>();
         protected Point spawnTile = new Point(0, 0);
         protected string tileSheet = null;
 
@@ -32,6 +30,8 @@ namespace MouseToMove {
                 List<int> walkableTile = new List<int>();
                 string nextRoom = null;
                 int doorIndex = -1;
+                Dictionary<int, Rectangle> spriteSources = new Dictionary<int, Rectangle>();
+                List<List<int>> mapFormat = new List<List<int>>();
 
                 using (TextReader reader = File.OpenText(mapPath)) {
                     string contents = reader.ReadLine();
@@ -89,9 +89,24 @@ namespace MouseToMove {
                     tileMap = new Tile[rows][];
                     for (int i = 0; i < rows; ++i) {
                         tileMap[i] = new Tile[cols];
+                        //create individual tile
                         for (int j = 0; j < cols; ++j) {
-                           //create individual tiles in here
-
+                            Rectangle source = spriteSources[mapFormat[i][j]];
+                            //mapFormat[i][j] == individual tile
+                            Point worldPosition = new Point();
+                            worldPosition.X = (j * source.Width);
+                            worldPosition.Y = (i * source.Height);
+                            tileMap[i][j] = new Tile(tileSheet, source);
+                            tileMap[i][j].Walkable = false;
+                            tileMap[i][j].IsDoor = mapFormat[i][j] == doorIndex ? true : false;
+                            tileMap[i][j].WorldPosition = worldPosition;
+                            tileMap[i][j].Scale = 1.0f;
+                            foreach (int w in walkableTile) {
+                                if (mapFormat[i][j] == w) {
+                                    tileMap[i][j].Walkable = true;
+                                }
+                            }
+                             
                         }
                     }
                 }

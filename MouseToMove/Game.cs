@@ -6,7 +6,6 @@ using OpenTK;
 
 namespace MouseToMove {
     class Game {
-        public static Point SpawnTile = new Point(0, 0);
         protected PlayerCharacter hero = null;
         protected string heroSheet = "Assets/Link.png";
         protected Point cursorTile = new Point(0, 0);
@@ -31,12 +30,7 @@ namespace MouseToMove {
             new int[] { 1, 1, 1, 1, 1, 1, 1, 1 }
         };
         protected Map currentMap = null;
-        public static string TileSheet = null;
-        public static Rectangle[] SpriteSources = new Rectangle[] {
-            new Rectangle(466,32,TILE_SIZE,TILE_SIZE),
-            new Rectangle(466,1,TILE_SIZE,TILE_SIZE),
-            new Rectangle(32,187,TILE_SIZE,TILE_SIZE)
-        };
+        
         public Tile GetTile(PointF pixelPoint) {
             return currentMap[(int)pixelPoint.Y / TILE_SIZE][(int)pixelPoint.X / TILE_SIZE];
         }
