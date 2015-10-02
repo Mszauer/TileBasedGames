@@ -8,8 +8,7 @@ using GameFramework;
 
 namespace MouseToMove {
     class Tile {
-        public Map DoorTarget = null;
-        public Point DoorLocation = new Point();
+        public string DoorPath = null;
         public bool IsDoor { get; set; }
         public int Sprite { get; private set; }
         public Rectangle Source { get; private set; }
@@ -31,11 +30,6 @@ namespace MouseToMove {
         }
         public void Destroy() {
             TextureManager.Instance.UnloadTexture(Sprite);
-        }
-        public void MakeDoor(Map target, Point location) {
-            DoorTarget = target;
-            DoorLocation = location;
-            IsDoor = true;
         }
     }
 }

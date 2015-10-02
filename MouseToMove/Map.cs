@@ -23,12 +23,12 @@ namespace MouseToMove {
         }
         protected Point spawnTile = new Point(0, 0);
         protected string tileSheet = null;
+        protected string nextRoom = null;
 
         public Map(string mapPath){
             if (System.IO.File.Exists(mapPath)){
                 Console.WriteLine("Loading map...");
                 List<int> walkableTile = new List<int>();
-                string nextRoom = null;
                 int doorIndex = -1;
                 Dictionary<int, Rectangle> spriteSources = new Dictionary<int, Rectangle>();
                 List<List<int>> mapFormat = new List<List<int>>();
@@ -97,8 +97,10 @@ namespace MouseToMove {
                             worldPosition.X = (j * source.Width);
                             worldPosition.Y = (i * source.Height);
                             tileMap[i][j] = new Tile(tileSheet, source);
+                            
                             tileMap[i][j].Walkable = false;
                             tileMap[i][j].IsDoor = mapFormat[i][j] == doorIndex ? true : false;
+                            tileMap[i][j].DoorPath = tileMap[i][j].IsDoor ? nextRoom : null;
                             tileMap[i][j].WorldPosition = worldPosition;
                             tileMap[i][j].Scale = 1.0f;
                             foreach (int w in walkableTile) {
@@ -153,14 +155,10 @@ namespace MouseToMove {
                         Rectangle doorRect = new Rectangle(col * 30, row * 30, 30, 30);
                         //get a small rectangle in center of the player
                         Rectangle playerCenter = new Rectangle((int)hero.Center.X - 2, (int)hero.Center.Y - 2, 4, 4);
-
                         //look for an intersection
                         Rectangle intersection = Intersections.Rect(doorRect, playerCenter);
                         if (intersection.Width * intersection.Height > 0) {
-                            result = tileMap[row][col].DoorTarget;
-                            hero.Position.X = tileMap[row][col].DoorLocation.X * 30;
-                            hero.Position.Y = tileMap[row][col].DoorLocation.Y * 30;
-                            hero.SetTargetTile(tileMap[row][col].DoorLocation);
+                            result = new Map(tileMap[row][col].DoorPath);
                         }
                     }
                 }

@@ -9,7 +9,6 @@ using GameFramework;
 namespace OpenTheDoor {
     class Tile {
         public Map DoorTarget = null;
-        public Point DoorLocation = new Point();
         public bool IsDoor { get; set; }
         public int Sprite { get; private set; }
         public Rectangle Source { get; private set; }
