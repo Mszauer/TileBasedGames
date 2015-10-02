@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using GameFramework;
+using System.IO;
 
 namespace MouseToMove {
     class Map {
@@ -20,7 +21,66 @@ namespace MouseToMove {
                 return tileMap.Length;
             }
         }
-        public Map(int[][] layout, string sheets, Rectangle[] sources, params int[] walkable) {
+        int[] row = null;
+        int[] col = null;
+        Tile[][] map = null;
+
+        public Map(string mapPath){
+            if (System.IO.File.Exists(mapPath)){
+                Console.WriteLine("Loading map...");
+                using (TextReader reader = File.OpenText(mapPath)) {
+                    string contents = reader.ReadLine();
+                    row = new int[contents.Length];
+
+                    while (contents != null) {
+                        List<string> content = contents.Split(' ');
+                        //do map stuff here
+                        if (content[0] >= 0) {
+                            //load rows
+                            for (int i = 0; i < content.Length; i++) {
+                                row[i] = (int)content[i];
+                            }
+                        }
+                        if (content[0] == 'T') {
+                            //texture path
+                            string path = content;
+                            for (int i = 2; i < content.Length; i++) {
+                                //add the chars into a string
+                                path += content[i];
+                            }
+                            Game.TileSheet = path;
+                        }
+                        if (content[0] == 'R') {
+                            //source rectangle from texture
+                            //split by space
+                            Rectangle r = new Rectangle(content[1], content[2], content[3], content[4]); //what about double digits?
+                            Game.SpriteSources.Add
+                            //what type of tile
+                            //rectangle size
+
+                        }
+                        if (content[0] == 'W') {
+                            //which tiles are walkable
+                        }
+                        if (content[0] == 'D') {
+                            //identifies which tile is a door
+                            //door destination
+                        }
+                        if(content[0] == 'S') {
+                            //starting tile
+                            Game.SpawnTile = new Point((int)content[1], (int)content[2]);
+                        }
+                        contents = reader.ReadLine();
+                    }
+                }
+                Console.WriteLine("Map has been laoded");
+            }
+            else {
+                Console.WriteLine("Map not found!");
+            }
+        }
+        
+        /*public Map(int[][] layout, string sheets, Rectangle[] sources, params int[] walkable) {
             Tile[][] result = new Tile[layout.Length][];
             float scale = 1.0f;
             for (int i = 0; i < layout.Length; i++) {
@@ -46,6 +106,7 @@ namespace MouseToMove {
                 tileMap = result;
             }
         }
+        */
         public Map ResolveDoors(PlayerCharacter hero) {
             Map result = this;
             for (int row = 0; row < tileMap.Length; row++) {

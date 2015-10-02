@@ -6,7 +6,7 @@ using OpenTK;
 
 namespace MouseToMove {
     class Game {
-        protected Point spawnTile = new Point(2, 1);
+        public static Point SpawnTile = new Point(0, 0);
         protected PlayerCharacter hero = null;
         protected string heroSheet = "Assets/Link.png";
         protected Point cursorTile = new Point(0, 0);
@@ -31,8 +31,8 @@ namespace MouseToMove {
             new int[] { 1, 1, 1, 1, 1, 1, 1, 1 }
         };
         protected Map currentMap = null;
-        protected string spriteSheets = "Assets/HouseTiles.png";
-        protected Rectangle[] spriteSources = new Rectangle[] {
+        public static string TileSheet = null;
+        public static Rectangle[] SpriteSources = new Rectangle[] {
             new Rectangle(466,32,TILE_SIZE,TILE_SIZE),
             new Rectangle(466,1,TILE_SIZE,TILE_SIZE),
             new Rectangle(32,187,TILE_SIZE,TILE_SIZE)
@@ -65,9 +65,9 @@ namespace MouseToMove {
             window.ClientSize = new Size(room1Layout[0].Length * TILE_SIZE, room1Layout.Length * TILE_SIZE);
             TextureManager.Instance.UseNearestFiltering = true;
 
-            hero = new PlayerCharacter(heroSheet, new Point(spawnTile.X * TILE_SIZE, spawnTile.Y * TILE_SIZE));
-            room1 = new Map(room1Layout, spriteSheets, spriteSources, 2, 0);
-            room2 = new Map(room2Layout, spriteSheets, spriteSources, 0, 2);
+            hero = new PlayerCharacter(heroSheet, new Point(SpawnTile.X * TILE_SIZE, SpawnTile.Y * TILE_SIZE));
+            room1 = new Map(room1Layout, TileSheet, SpriteSources, 2, 0);
+            room2 = new Map(room2Layout, TileSheet, SpriteSources, 0, 2);
             room1[4][7].MakeDoor(room2, new Point(1, 1));
             room2[1][0].MakeDoor(room1, new Point(6, 4));
             currentMap = room1;
