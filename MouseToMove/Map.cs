@@ -83,6 +83,17 @@ namespace MouseToMove {
                         }
                         contents = reader.ReadLine();
                     }
+                    //create map
+                    int rows = mapFormat.Count;
+                    int cols = mapFormat[0].Count;
+                    tileMap = new Tile[rows][];
+                    for (int i = 0; i < rows; ++i) {
+                        tileMap[i] = new Tile[cols];
+                        for (int j = 0; j < cols; ++j) {
+                           //create individual tiles in here
+
+                        }
+                    }
                 }
                 Console.WriteLine("Map has been loaded");
             }
