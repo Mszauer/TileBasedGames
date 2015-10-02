@@ -21,59 +21,70 @@ namespace MouseToMove {
                 return tileMap.Length;
             }
         }
-        int[] row = null;
-        int[] col = null;
-        Tile[][] map = null;
+        List<List<int>> mapFormat = new List<List<int>>();
+        protected Dictionary<int,Rectangle> spriteSources = new Dictionary<int, Rectangle>();
+        protected Point spawnTile = new Point(0, 0);
+        protected string tileSheet = null;
 
         public Map(string mapPath){
             if (System.IO.File.Exists(mapPath)){
                 Console.WriteLine("Loading map...");
+                List<int> walkableTile = new List<int>();
+                string nextRoom = null;
+                int doorIndex = -1;
+
                 using (TextReader reader = File.OpenText(mapPath)) {
                     string contents = reader.ReadLine();
-                    row = new int[contents.Length];
 
                     while (contents != null) {
-                        List<string> content = contents.Split(' ');
-                        //do map stuff here
-                        if (content[0] >= 0) {
-                            //load rows
+                        string[] content = contents.Split(' ');
+                        //load rows
+                        if (System.Convert.ToInt32(content[0]) >= 0) {
+                            //create new row
+                            mapFormat.Add(new List<int>());
                             for (int i = 0; i < content.Length; i++) {
-                                row[i] = (int)content[i];
+                                //add numbers to row
+                                 mapFormat[mapFormat.Count-1].Add(System.Convert.ToInt32(content[i]));
                             }
                         }
-                        if (content[0] == 'T') {
+                        //load texture
+                        if (content[0] == "T") {
                             //texture path
-                            string path = content;
-                            for (int i = 2; i < content.Length; i++) {
+                            string path = content[1];
+                            for (int i = 1; i < content.Length; i++) {
                                 //add the chars into a string
                                 path += content[i];
                             }
-                            Game.TileSheet = path;
+                            tileSheet = path;
                         }
-                        if (content[0] == 'R') {
-                            //source rectangle from texture
-                            //split by space
-                            Rectangle r = new Rectangle(content[1], content[2], content[3], content[4]); //what about double digits?
-                            Game.SpriteSources.Add
-                            //what type of tile
-                            //rectangle size
-
+                        //load source rects
+                        if (content[0] == "R") {
+                            //source rect
+                            Rectangle r = new Rectangle(System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]), System.Convert.ToInt32(content[3]), System.Convert.ToInt32(content[4]));
+                            //adds rect index and source rect to dictionary
+                            spriteSources.Add(System.Convert.ToInt32(content[1]), r);
                         }
-                        if (content[0] == 'W') {
-                            //which tiles are walkable
+                        //walkable tile indices
+                        if (content[0] == "W") {
+                            for(int i = 1; i < content.Length; i++) {
+                                walkableTile.Add(System.Convert.ToInt32(content[i]));
+                            }
                         }
-                        if (content[0] == 'D') {
+                        //door tiles
+                        if (content[0] == "D") {
                             //identifies which tile is a door
+                            doorIndex = System.Convert.ToInt32(content[1]);
                             //door destination
+                            nextRoom = content[2];
                         }
-                        if(content[0] == 'S') {
-                            //starting tile
-                            Game.SpawnTile = new Point((int)content[1], (int)content[2]);
+                        //starting tile
+                        if (content[0] == "S") {
+                            spawnTile = new Point(System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]));
                         }
                         contents = reader.ReadLine();
                     }
                 }
-                Console.WriteLine("Map has been laoded");
+                Console.WriteLine("Map has been loaded");
             }
             else {
                 Console.WriteLine("Map not found!");
