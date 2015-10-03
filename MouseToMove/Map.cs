@@ -47,22 +47,22 @@ namespace MouseToMove {
                             Console.WriteLine("Texture Path: " + tileSheet);
                         }
                         //load source rects
-                        if (content[0] == "R") {
+                        else if (content[0] == "R") {
                             //source rect
-                            Rectangle r = new Rectangle(System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]), System.Convert.ToInt32(content[3]), System.Convert.ToInt32(content[4]));
+                            Rectangle r = new Rectangle(System.Convert.ToInt32(content[2]), System.Convert.ToInt32(content[3]), System.Convert.ToInt32(content[4]), System.Convert.ToInt32(content[5]));
                             //adds rect index and source rect to dictionary
                             spriteSources.Add(System.Convert.ToInt32(content[1]), r);
                             Console.WriteLine("Rectangle added: " + r);
                         }
                         //walkable tile indices
-                        if (content[0] == "W") {
+                        else if (content[0] == "W") {
                             for(int i = 1; i < content.Length; i++) {
                                 walkableTile.Add(System.Convert.ToInt32(content[i]));
                                 Console.WriteLine("Walkable Tiles: " + System.Convert.ToInt32(content[i]));
                             }
                         }
                         //door tiles
-                        if (content[0] == "D") {
+                        else if (content[0] == "D") {
                             //identifies which tile is a door
                             doorIndex = System.Convert.ToInt32(content[1]);
                             //door destination
@@ -71,12 +71,12 @@ namespace MouseToMove {
                             Console.WriteLine("Next room path: " + content[2]);
                         }
                         //starting tile
-                        if (content[0] == "S") {
+                        else if (content[0] == "S") {
                             spawnTile = new Point(System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]));
                             Console.WriteLine("Starting tile: " + System.Convert.ToInt32(content[1]) + ", " +  System.Convert.ToInt32(content[2]));
                         }
                         //load rows
-                        if (System.Convert.ToInt32(content[0]) >= 0) {
+                        else if (System.Convert.ToInt32(content[0]) >= 0) {
                             //create new row
                             mapFormat.Add(new List<int>());
                             for (int i = 0; i < content.Length; i++) {
