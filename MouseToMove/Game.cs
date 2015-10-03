@@ -13,6 +13,7 @@ namespace MouseToMove {
         public static readonly int TILE_SIZE = 30;
         protected Map currentMap = null;
         protected string startingMap = "Assets/DefaultMap.txt";
+        List<Bullet> projectiles = null;
         
         public Tile GetTile(PointF pixelPoint) {
             return currentMap[(int)pixelPoint.Y / TILE_SIZE][(int)pixelPoint.X / TILE_SIZE];
@@ -43,6 +44,7 @@ namespace MouseToMove {
             TextureManager.Instance.UseNearestFiltering = true;
             hero = new PlayerCharacter(heroSheet);
             currentMap = new Map(startingMap,hero);
+            projectiles = new List<Bullet>();
         }
         public void Update(float dt) {
             currentMap = currentMap.ResolveDoors(hero);
@@ -55,12 +57,36 @@ namespace MouseToMove {
                     }
                 }
             }
-            currentMap.Update(dt, hero);
+            if (InputManager.Instance.KeyPressed(OpenTK.Input.Key.Space)) {
+                Console.WriteLine("Fire!");
+                PointF velocity = new PointF(0.0f, 0.0f);
+                if (hero.currentSprite == "up") {
+                    velocity.Y -= 100.0f;
+                }
+                else if (hero.currentSprite == "down") {
+                    velocity.Y += 100.0f;
+                }
+                if (hero.currentSprite == "left") {
+                    velocity.X -= 100.0f;
+                }
+                else if (hero.currentSprite == "right") {
+                    velocity.X += 100.0f;
+                }
+                Console.WriteLine("Direction shot: " + hero.currentSprite);
+                Console.WriteLine("Added bullet, velocity: " + velocity);
+                projectiles.Add(new Bullet(hero.Center, velocity));
+            }
+                for (int i = projectiles.Count - 1; i >= 0; i--) {
+                    projectiles[i].Update(dt);
+                }
+            currentMap.Update(dt, hero,projectiles);
         }
         public void Render() {
             currentMap.Render();
             hero.Render();
-
+            for (int i = 0; i < projectiles.Count; i++) {
+                projectiles[i].Render();
+            }
             //Draw mouse indicator
             Rectangle currentTile = GetTileRect(InputManager.Instance.MousePosition);
                 //Top

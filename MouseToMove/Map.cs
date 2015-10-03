@@ -142,7 +142,20 @@ namespace MouseToMove {
                 Console.WriteLine("Map not found!");
             }
         }
-        public void Update(float dTime,PlayerCharacter hero) {
+        public void Update(float dTime,PlayerCharacter hero, List<Bullet> projectiles) {
+                for (int i = projectiles.Count - 1; i >= 0; i--) {
+                    int xTile = (int)projectiles[i].Position.X / Game.TILE_SIZE;
+                    int yTile = (int)projectiles[i].Position.Y / Game.TILE_SIZE;
+                    if (xTile >= this[0].Length || xTile < 0) {
+                        projectiles.RemoveAt(i);
+                    }
+                    else if (yTile >= this.Length || yTile < 0) {
+                        projectiles.RemoveAt(i);
+                    }
+                    else if (!this[yTile][xTile].Walkable) {
+                        projectiles.RemoveAt(i);
+                    }
+                }
             for (int i = enemies.Count - 1; i >= 0; i--) {
                 enemies[i].Update(dTime);
                 Rectangle intersection = Intersections.Rect(hero.Rect, enemies[i].Rect);
