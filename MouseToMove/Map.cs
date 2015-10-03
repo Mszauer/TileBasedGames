@@ -88,6 +88,7 @@ namespace MouseToMove {
                             bool upDownMove = content[2] == "X" ? false : true;
                             enemies.Add(new EnemyCharacter(content[1],upDownMove));
                             Console.WriteLine("Enemy added, Up Down Movement: " + upDownMove);
+                            Console.WriteLine("Enemy sprite path: " + content[1]);
                             enemies[enemies.Count - 1].Position.X = System.Convert.ToInt32(content[3])*Game.TILE_SIZE;
                             enemies[enemies.Count - 1].Position.Y = System.Convert.ToInt32(content[4])*Game.TILE_SIZE;
                         }
@@ -191,12 +192,10 @@ namespace MouseToMove {
                         Rectangle intersection = Intersections.Rect(doorRect, playerCenter);
                         if (intersection.Width * intersection.Height > 0) {
                             this.Destroy();
-                            for (int i = enemies.Count - 1; i >= 0; i++) {
-                                enemies[i].Destroy();
-                            }
                             result = new Map(tileMap[row][col].DoorPath,hero);
                             hero.Position.X = doorSpawn.X*Game.TILE_SIZE;
                             hero.Position.Y = doorSpawn.Y * Game.TILE_SIZE;
+                            hero.SetTargetTile(new Point((int)hero.Position.X/Game.TILE_SIZE,(int)hero.Position.Y/Game.TILE_SIZE));
                         }
                     }
                 }
