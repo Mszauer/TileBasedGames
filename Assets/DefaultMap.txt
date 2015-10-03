@@ -6,9 +6,10 @@
 1 0 1 1 1 0 0 0 0 0 0 0 0 0 2
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 T Assets/HouseTiles.png
+W 0 2
+D 2 Assets/NextRoom.txt 2 1
 R 0 466 32 30 30
 R 1 466 1 30 30 
 R 2 32 187 30 30
-W 0 2
-D 2 Assets/NextRoom.txt
-S 2 1
+S 2 1 
+E 4 1 Y

@@ -24,6 +24,7 @@ namespace MouseToMove {
         protected Point spawnTile = new Point(0, 0);
         protected string tileSheet = null;
         protected string nextRoom = null;
+        protected Point doorSpawn = new Point(0, 0);
 
         public Map(string mapPath, PlayerCharacter hero){
             if (System.IO.File.Exists(mapPath)){
@@ -67,13 +68,19 @@ namespace MouseToMove {
                             doorIndex = System.Convert.ToInt32(content[1]);
                             //door destination
                             nextRoom = content[2];
+                            //door spawn destination
+                            doorSpawn = new Point(System.Convert.ToInt32(content[3]), System.Convert.ToInt32(content[4]));
                             Console.WriteLine("Door tile index: " + System.Convert.ToInt32(content[1]));
                             Console.WriteLine("Next room path: " + content[2]);
+                            Console.WriteLine("Door spawn location: " + content[3] + ", " + content[4]);
                         }
                         //starting tile
                         else if (content[0] == "S") {
                             spawnTile = new Point(System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]));
                             Console.WriteLine("Starting tile: " + System.Convert.ToInt32(content[1]) + ", " +  System.Convert.ToInt32(content[2]));
+                        }
+                        else if (content[0] == "E") {
+
                         }
                         //load rows
                         else if (System.Convert.ToInt32(content[0]) >= 0) {
@@ -118,6 +125,7 @@ namespace MouseToMove {
                 }
                 hero.Position.X = spawnTile.X * Game.TILE_SIZE;
                 hero.Position.Y = spawnTile.Y * Game.TILE_SIZE;
+                hero.SetTargetTile(spawnTile);
                 Console.WriteLine("Map has been loaded");
             }
             else {
@@ -164,7 +172,10 @@ namespace MouseToMove {
                         //look for an intersection
                         Rectangle intersection = Intersections.Rect(doorRect, playerCenter);
                         if (intersection.Width * intersection.Height > 0) {
+                            this.Destroy();
                             result = new Map(tileMap[row][col].DoorPath,hero);
+                            hero.Position.X = doorSpawn.X;
+                            hero.Position.Y = doorSpawn.Y;
                         }
                     }
                 }

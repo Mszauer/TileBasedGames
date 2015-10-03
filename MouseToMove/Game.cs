@@ -48,12 +48,11 @@ namespace MouseToMove {
             currentMap = currentMap.ResolveDoors(hero);
             hero.Update(dt);
             cursorTile = new Point(InputManager.Instance.MousePosition.X/TILE_SIZE, InputManager.Instance.MousePosition.Y / TILE_SIZE);
-            if (InputManager.Instance.MousePressed(OpenTK.Input.MouseButton.Left) || InputManager.Instance.KeyPressed(OpenTK.Input.Key.M)) {
-                if (currentMap[cursorTile.Y][cursorTile.X].Walkable) {
-                    if (currentMap[cursorTile.Y][cursorTile.X].IsDoor) {
-                      
+            if (InputManager.Instance.MousePosition.X  / TILE_SIZE < currentMap[0].Length ) {
+                if (InputManager.Instance.MousePressed(OpenTK.Input.MouseButton.Left) || InputManager.Instance.KeyPressed(OpenTK.Input.Key.M)) {
+                    if (currentMap[cursorTile.Y][cursorTile.X].Walkable) {
+                        hero.SetTargetTile(cursorTile);
                     }
-                    hero.SetTargetTile(cursorTile);
                 }
             }
         }
@@ -73,6 +72,7 @@ namespace MouseToMove {
             GraphicsManager.Instance.DrawLine(new Point(currentTile.X + currentTile.Width, currentTile.Y), new Point(currentTile.X+currentTile.Width, currentTile.Y + currentTile.Height), Color.Red);
         }
         public void Shutdown() {
+            currentMap.Destroy();
             hero.Destroy();
         }
     }
