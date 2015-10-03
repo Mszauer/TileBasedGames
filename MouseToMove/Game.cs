@@ -12,7 +12,7 @@ namespace MouseToMove {
         public OpenTK.GameWindow Window = null;
         public static readonly int TILE_SIZE = 30;
         protected Map currentMap = null;
-        protected string startingMap = "Assets/DefaultMap.txt";
+        protected string startingMap = "Assets/FirstRoom.txt";
         List<Bullet> projectiles = null;
         
         public Tile GetTile(PointF pixelPoint) {
