@@ -38,24 +38,13 @@ namespace MouseToMove {
 
                     while (contents != null) {
                         string[] content = contents.Split(' ');
-                        //load rows
-                        if (System.Convert.ToInt32(content[0]) >= 0) {
-                            //create new row
-                            mapFormat.Add(new List<int>());
-                            for (int i = 0; i < content.Length; i++) {
-                                //add numbers to row
-                                 mapFormat[mapFormat.Count-1].Add(System.Convert.ToInt32(content[i]));
-                            }
-                        }
+                        
                         //load texture
                         if (content[0] == "T") {
                             //texture path
                             string path = content[1];
-                            for (int i = 1; i < content.Length; i++) {
-                                //add the chars into a string
-                                path += content[i];
-                            }
                             tileSheet = path;
+                            Console.WriteLine("Texture Path: " + tileSheet);
                         }
                         //load source rects
                         if (content[0] == "R") {
@@ -63,11 +52,13 @@ namespace MouseToMove {
                             Rectangle r = new Rectangle(System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]), System.Convert.ToInt32(content[3]), System.Convert.ToInt32(content[4]));
                             //adds rect index and source rect to dictionary
                             spriteSources.Add(System.Convert.ToInt32(content[1]), r);
+                            Console.WriteLine("Rectangle added: " + r);
                         }
                         //walkable tile indices
                         if (content[0] == "W") {
                             for(int i = 1; i < content.Length; i++) {
                                 walkableTile.Add(System.Convert.ToInt32(content[i]));
+                                Console.WriteLine("Walkable Tiles: " + System.Convert.ToInt32(content[i]));
                             }
                         }
                         //door tiles
@@ -76,10 +67,23 @@ namespace MouseToMove {
                             doorIndex = System.Convert.ToInt32(content[1]);
                             //door destination
                             nextRoom = content[2];
+                            Console.WriteLine("Door tile index: " + System.Convert.ToInt32(content[1]));
+                            Console.WriteLine("Next room path: " + content[2]);
                         }
                         //starting tile
                         if (content[0] == "S") {
                             spawnTile = new Point(System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]));
+                            Console.WriteLine("Starting tile: " + System.Convert.ToInt32(content[1]) + ", " +  System.Convert.ToInt32(content[2]));
+                        }
+                        //load rows
+                        if (System.Convert.ToInt32(content[0]) >= 0) {
+                            //create new row
+                            mapFormat.Add(new List<int>());
+                            for (int i = 0; i < content.Length; i++) {
+                                //add numbers to row
+                                mapFormat[mapFormat.Count - 1].Add(System.Convert.ToInt32(content[i]));
+                            }
+                            Console.WriteLine("Row created");
                         }
                         contents = reader.ReadLine();
                     }
