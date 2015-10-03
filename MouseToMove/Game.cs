@@ -55,6 +55,7 @@ namespace MouseToMove {
                     }
                 }
             }
+            currentMap.Update(dt, hero);
         }
         public void Render() {
             currentMap.Render();

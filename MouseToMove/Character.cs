@@ -13,6 +13,8 @@ namespace MouseToMove {
         public Dictionary<string, Rectangle[]> SpriteSources { get; private set; }
         public string currentSprite { get; set; }
         public int currentFrame = 0;
+        float animFPS = 1.0f / 9.0f;
+        float animTimer = 0f;
         public Rectangle Rect {
             get {
                 return new Rectangle((int)Position.X, (int)Position.Y, SpriteSources[currentSprite][currentFrame].Width, SpriteSources[currentSprite][currentFrame].Height);
@@ -73,6 +75,16 @@ namespace MouseToMove {
                 currentSprite = name;
             }
             SpriteSources.Add(name, source);
+        }
+        protected void Animate(float dTime) {
+            animTimer += dTime;
+            if (animTimer > animFPS) {
+                animTimer -= animFPS;
+                currentFrame += 1;
+                if (currentFrame > SpriteSources[currentSprite].Length - 1) {
+                    currentFrame = 0;
+                }
+            }
         }
     }
 }

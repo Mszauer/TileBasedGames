@@ -9,8 +9,7 @@ using System.Drawing;
 namespace MouseToMove {
     class PlayerCharacter : Character {
         public float speed = 90.0f;
-        float animFPS = 1.0f / 9.0f;
-        float animTimer = 0f;
+        
         protected Point targetTile = new Point(2, 1);
         public void SetTargetTile(Point target) {
             targetTile = new Point(target.X, target.Y);
@@ -117,15 +116,6 @@ namespace MouseToMove {
                 }
             }
         }
-        protected void Animate(float dTime) {
-            animTimer += dTime;
-            if (animTimer > animFPS) {
-                animTimer -= animFPS;
-                currentFrame += 1;
-                if (currentFrame > SpriteSources[currentSprite].Length - 1) {
-                    currentFrame = 0;
-                }
-            }
-        }
+        
     }
 }

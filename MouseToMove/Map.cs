@@ -25,6 +25,7 @@ namespace MouseToMove {
         protected string tileSheet = null;
         protected string nextRoom = null;
         protected Point doorSpawn = new Point(0, 0);
+        List<EnemyCharacter> enemies = null;
 
         public Map(string mapPath, PlayerCharacter hero){
             if (System.IO.File.Exists(mapPath)){
@@ -79,8 +80,16 @@ namespace MouseToMove {
                             spawnTile = new Point(System.Convert.ToInt32(content[1]), System.Convert.ToInt32(content[2]));
                             Console.WriteLine("Starting tile: " + System.Convert.ToInt32(content[1]) + ", " +  System.Convert.ToInt32(content[2]));
                         }
+                        //add enemies
                         else if (content[0] == "E") {
-
+                            if (enemies == null) {
+                                enemies = new List<EnemyCharacter>();
+                            }
+                            bool upDownMove = content[2] == "X" ? false : true;
+                            enemies.Add(new EnemyCharacter(content[1],upDownMove));
+                            Console.WriteLine("Enemy added, Up Down Movement: " + upDownMove);
+                            enemies[enemies.Count - 1].Position.X = System.Convert.ToInt32(content[3])*Game.TILE_SIZE;
+                            enemies[enemies.Count - 1].Position.Y = System.Convert.ToInt32(content[4])*Game.TILE_SIZE;
                         }
                         //load rows
                         else if (System.Convert.ToInt32(content[0]) >= 0) {
@@ -132,7 +141,16 @@ namespace MouseToMove {
                 Console.WriteLine("Map not found!");
             }
         }
-        
+        public void Update(float dTime,PlayerCharacter hero) {
+            for (int i = enemies.Count - 1; i >= 0; i--) {
+                enemies[i].Update(dTime);
+                Rectangle intersection = Intersections.Rect(hero.Rect, enemies[i].Rect);
+                if (intersection.Width * intersection.Height > 0) {
+                    //Game.Instance.GameOver = true;
+                    Console.WriteLine("Collision between player and enemy detected");
+                }
+            }
+        }
         /*public Map(int[][] layout, string sheets, Rectangle[] sources, params int[] walkable) {
             Tile[][] result = new Tile[layout.Length][];
             float scale = 1.0f;
@@ -173,9 +191,12 @@ namespace MouseToMove {
                         Rectangle intersection = Intersections.Rect(doorRect, playerCenter);
                         if (intersection.Width * intersection.Height > 0) {
                             this.Destroy();
+                            for (int i = enemies.Count - 1; i >= 0; i++) {
+                                enemies[i].Destroy();
+                            }
                             result = new Map(tileMap[row][col].DoorPath,hero);
-                            hero.Position.X = doorSpawn.X;
-                            hero.Position.Y = doorSpawn.Y;
+                            hero.Position.X = doorSpawn.X*Game.TILE_SIZE;
+                            hero.Position.Y = doorSpawn.Y * Game.TILE_SIZE;
                         }
                     }
                 }
@@ -188,12 +209,18 @@ namespace MouseToMove {
                     tileMap[h][w].Render();
                 }
             }
+            for (int i = enemies.Count - 1; i >= 0; i--) {
+                enemies[i].Render();
+            }
         }
         public void Destroy() {
             for (int h = 0; h < tileMap.Length; h++) {
                 for (int w = 0; w < tileMap[h].Length; w++) {
                     tileMap[h][w].Destroy();
                 }
+            }
+            for (int i = enemies.Count-1; i >= 0; i--) {
+                enemies[i].Destroy();
             }
         }
     }
