@@ -10,26 +10,9 @@ namespace MouseToMove {
         protected string heroSheet = "Assets/Link.png";
         protected Point cursorTile = new Point(0, 0);
         public OpenTK.GameWindow Window = null;
-        protected Map room1 = null;
         public static readonly int TILE_SIZE = 30;
-        protected int[][] room1Layout = new int[][] {
-            new int[] { 1, 1, 1, 1, 1, 1, 1, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 1, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 1, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 2 },
-            new int[] { 1, 1, 1, 1, 1, 1, 1, 1 }
-        };
-        protected Map room2 = null;
-        protected int[][] room2Layout = new int[][] {
-            new int[] { 1, 1, 1, 1, 1, 1, 1, 1 },
-            new int[] { 2, 0, 0, 0, 1, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 0, 0, 0, 1 },
-            new int[] { 1, 0, 0, 0, 1, 0, 0, 1 },
-            new int[] { 1, 1, 1, 1, 1, 1, 1, 1 }
-        };
         protected Map currentMap = null;
+        protected string startingMap = "Assets/DefaultMap.txt";
         
         public Tile GetTile(PointF pixelPoint) {
             return currentMap[(int)pixelPoint.Y / TILE_SIZE][(int)pixelPoint.X / TILE_SIZE];
@@ -56,15 +39,10 @@ namespace MouseToMove {
         }
         public void Initialize(OpenTK.GameWindow window) {
             Window = window;
-            window.ClientSize = new Size(room1Layout[0].Length * TILE_SIZE, room1Layout.Length * TILE_SIZE);
+            window.ClientSize = new Size(15 * TILE_SIZE, 7 * TILE_SIZE);
             TextureManager.Instance.UseNearestFiltering = true;
-
-            hero = new PlayerCharacter(heroSheet, new Point(SpawnTile.X * TILE_SIZE, SpawnTile.Y * TILE_SIZE));
-            room1 = new Map(room1Layout, TileSheet, SpriteSources, 2, 0);
-            room2 = new Map(room2Layout, TileSheet, SpriteSources, 0, 2);
-            room1[4][7].MakeDoor(room2, new Point(1, 1));
-            room2[1][0].MakeDoor(room1, new Point(6, 4));
-            currentMap = room1;
+            hero = new PlayerCharacter(heroSheet);
+            currentMap = new Map(startingMap,hero);
         }
         public void Update(float dt) {
             currentMap = currentMap.ResolveDoors(hero);
@@ -95,8 +73,6 @@ namespace MouseToMove {
             GraphicsManager.Instance.DrawLine(new Point(currentTile.X + currentTile.Width, currentTile.Y), new Point(currentTile.X+currentTile.Width, currentTile.Y + currentTile.Height), Color.Red);
         }
         public void Shutdown() {
-            room1.Destroy();
-            room2.Destroy();
             hero.Destroy();
         }
     }

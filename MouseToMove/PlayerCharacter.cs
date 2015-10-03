@@ -15,7 +15,7 @@ namespace MouseToMove {
         public void SetTargetTile(Point target) {
             targetTile = new Point(target.X, target.Y);
         }
-        public PlayerCharacter(string spritePath, Point pos) : base(spritePath, pos) {
+        public PlayerCharacter(string spritePath) : base(spritePath) {
             AddSprite("Down", new Rectangle(59, 1, 24, 30), new Rectangle(87, 1, 24, 30));
             AddSprite("Up", new Rectangle(115, 3, 22, 28), new Rectangle(141, 3, 22, 30));
             AddSprite("Left", new Rectangle(1, 1, 26, 30), new Rectangle(31, 1, 26, 30));

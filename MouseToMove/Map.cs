@@ -25,7 +25,7 @@ namespace MouseToMove {
         protected string tileSheet = null;
         protected string nextRoom = null;
 
-        public Map(string mapPath){
+        public Map(string mapPath, PlayerCharacter hero){
             if (System.IO.File.Exists(mapPath)){
                 Console.WriteLine("Loading map...");
                 List<int> walkableTile = new List<int>();
@@ -112,6 +112,8 @@ namespace MouseToMove {
                         }
                     }
                 }
+                hero.Position.X = spawnTile.X * Game.TILE_SIZE;
+                hero.Position.Y = spawnTile.Y * Game.TILE_SIZE;
                 Console.WriteLine("Map has been loaded");
             }
             else {
@@ -158,7 +160,7 @@ namespace MouseToMove {
                         //look for an intersection
                         Rectangle intersection = Intersections.Rect(doorRect, playerCenter);
                         if (intersection.Width * intersection.Height > 0) {
-                            result = new Map(tileMap[row][col].DoorPath);
+                            result = new Map(tileMap[row][col].DoorPath,hero);
                         }
                     }
                 }
