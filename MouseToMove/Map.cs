@@ -23,9 +23,8 @@ namespace MouseToMove {
         }
         protected Point spawnTile = new Point(0, 0);
         protected string tileSheet = null;
-        protected List<string> nextRoom = new List<string>();
-        protected List<Point> doorSpawn = new List<Point>();
-        List<EnemyCharacter> enemies = null;
+        protected Dictionary<string, Point> nextRoom = null;
+        protected List<EnemyCharacter> enemies = null;
 
         public Map(string mapPath, PlayerCharacter hero){
             if (System.IO.File.Exists(mapPath)){
@@ -34,6 +33,8 @@ namespace MouseToMove {
                 List<int> doorIndex = new List<int>();
                 Dictionary<int, Rectangle> spriteSources = new Dictionary<int, Rectangle>();
                 List<List<int>> mapFormat = new List<List<int>>();
+                nextRoom = new Dictionary<string, Point>();
+                Dictionary<int,string> nextMap = new Dictionary<int, string>();
 
                 using (TextReader reader = File.OpenText(mapPath)) {
                     string contents = reader.ReadLine();
@@ -68,9 +69,9 @@ namespace MouseToMove {
                             //identifies which tile is a door
                             doorIndex.Add(System.Convert.ToInt32(content[1]));
                             //door destination
-                            nextRoom.Add(content[2]);
+                            nextRoom.Add(content[2], new Point(System.Convert.ToInt32(content[3]), System.Convert.ToInt32(content[4])));
                             //door spawn destination
-                            doorSpawn.Add(new Point(System.Convert.ToInt32(content[3]), System.Convert.ToInt32(content[4])));
+                            nextMap.Add(System.Convert.ToInt32(content[1]), content[2]);
                             Console.WriteLine("Door tile index: " + System.Convert.ToInt32(content[1]));
                             Console.WriteLine("Next room path: " + content[2]);
                             Console.WriteLine("Door spawn location: " + content[3] + ", " + content[4]);
@@ -98,6 +99,9 @@ namespace MouseToMove {
                             mapFormat.Add(new List<int>());
                             for (int i = 0; i < content.Length; i++) {
                                 //add numbers to row
+                                if (string.IsNullOrEmpty(content[i])) {
+                                    continue;
+                                }
                                 mapFormat[mapFormat.Count - 1].Add(System.Convert.ToInt32(content[i]));
                             }
                             Console.WriteLine("Row created");
@@ -120,9 +124,12 @@ namespace MouseToMove {
                             tileMap[i][j] = new Tile(tileSheet, source);
                             
                             tileMap[i][j].Walkable = false;
+
                             for (int k = 0; k < doorIndex.Count; k++) {
                                 tileMap[i][j].IsDoor = mapFormat[i][j] == doorIndex[k] ? true : false;
-                                tileMap[i][j].DoorPath = tileMap[i][j].IsDoor ? nextRoom[k] : null;
+                            }
+                            if (tileMap[i][j].IsDoor) {
+                                tileMap[i][j].DoorPath = nextMap[mapFormat[i][j]];
                             }
                             tileMap[i][j].WorldPosition = worldPosition;
                             tileMap[i][j].Scale = 1.0f;
@@ -167,33 +174,7 @@ namespace MouseToMove {
                 }
             }
         }
-        /*public Map(int[][] layout, string sheets, Rectangle[] sources, params int[] walkable) {
-            Tile[][] result = new Tile[layout.Length][];
-            float scale = 1.0f;
-            for (int i = 0; i < layout.Length; i++) {
-                result[i] = new Tile[layout[i].Length];
 
-                for (int j = 0; j < layout[i].Length; j++) {
-                    Rectangle source = sources[layout[i][j]];
-
-                    Point worldPosition = new Point();
-                    worldPosition.X = (int)(j * source.Width);
-                    worldPosition.Y = (int)(i * source.Height);
-                    result[i][j] = new Tile(sheets, source);
-                    result[i][j].Walkable = false;
-                    result[i][j].IsDoor = false;
-                    result[i][j].WorldPosition = worldPosition;
-                    result[i][j].Scale = scale;
-                    foreach (int w in walkable) {
-                        if (layout[i][j] == w) {
-                            tileMap[i][j].Walkable = true;
-                        }
-                    }
-                }
-                tileMap = result;
-            }
-        }
-        */
         public Map ResolveDoors(PlayerCharacter hero) {
             Map result = this;
             for (int row = 0; row < tileMap.Length; row++) {
@@ -208,8 +189,8 @@ namespace MouseToMove {
                         if (intersection.Width * intersection.Height > 0) {
                             this.Destroy();
                             result = new Map(tileMap[row][col].DoorPath,hero);
-                            hero.Position.X = doorSpawn.X * Game.TILE_SIZE;
-                            hero.Position.Y = doorSpawn.Y * Game.TILE_SIZE;
+                            hero.Position.X = nextRoom[tileMap[row][col].DoorPath].X * Game.TILE_SIZE;
+                            hero.Position.Y = nextRoom[tileMap[row][col].DoorPath].Y * Game.TILE_SIZE;
                             hero.SetTargetTile(new Point((int)hero.Position.X/Game.TILE_SIZE,(int)hero.Position.Y/Game.TILE_SIZE));
                         }
                     }
