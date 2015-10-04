@@ -127,6 +127,9 @@ namespace MouseToMove {
 
                             for (int k = 0; k < doorIndex.Count; k++) {
                                 tileMap[i][j].IsDoor = mapFormat[i][j] == doorIndex[k] ? true : false;
+                                if (tileMap[i][j].IsDoor) {
+                                    break;
+                                }
                             }
                             if (tileMap[i][j].IsDoor) {
                                 tileMap[i][j].DoorPath = nextMap[mapFormat[i][j]];
